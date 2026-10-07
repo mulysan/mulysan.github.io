@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="he"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>ניתוח מחירי הדיור</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -797,7 +797,7 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
 
 
 
-<div class="apphead rephead" dir="rtl"><h1>ניתוח מחירי הדיור בישראל</h1><a class="xlink" href="https://claude.ai/artifact/Pghy1MYuq2ioXZqPHvZXDo" target="_blank" rel="noopener">למפת החלקות האינטראקטיבית ←</a>
+<div class="apphead rephead" dir="rtl"><h1>ניתוח מחירי הדיור בישראל</h1><a class="xlink" href="https://mulysan.github.io/html/housing_map" target="_blank" rel="noopener">למפת החלקות האינטראקטיבית ←</a>
   <p class="sub">290 אלף חלקות מגורים, כולל יהודה ושומרון. גזטיר הנכסים של מפ"י, עסקאות רשות המסים ו־govmap (1998 עד ספטמבר 2026), חלקות קדסטר, שכבות הלמ"ס ורשת הרחובות של OpenStreetMap.</p></div>
 <div class="wrap" dir="rtl">
   <div class="kpis" id="kpis"></div>
@@ -1167,8 +1167,8 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
   const landStyle = clear => ({ color:tok('--land-edge'), weight:clear ? 0 : 0.6, fillColor:tok('--land'), fillOpacity:clear ? 0 : 1 });
   const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { subdomains:'abcd', maxZoom:19 });
   const bmsel = document.getElementById('bmsel'), oa = document.getElementById('osmattr');
-  // OSM streets (build_basemap_osm.py): roads/major.bin for zoom < 12, 0.2-degree tiles roads/t_i_j.bin from zoom 12.
-  // Files are gzip'd: uint32 n | uint8 class[n] | uint16 npts[n] | int32 first[2n] | int16 deltas (lon/lat x 1e5).
+  // OSM streets (build_basemap_osm.py): roads/major.txt for zoom < 12, 0.2-degree tiles roads/t_i_j.txt from zoom 12.
+  // Files are base64 of gzip'd: uint32 n | uint8 class[n] | uint16 npts[n] | int32 first[2n] | int16 deltas (lon/lat x 1e5).
   const rcv = document.createElement('canvas'); rcv.className = 'leaflet-zoom-hide'; map.getPane('roads').appendChild(rcv);
   const rctx = rcv.getContext('2d'), RT = {}; let RIDX = null;
   const gunzip = async buf => { const u = new Uint8Array(buf); if (u[0] !== 0x1f || u[1] !== 0x8b) return buf;
@@ -1186,7 +1186,8 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
     return { n, k, np, X, Y, off, bb }; };
   const getRoads = name => { if (RT[name]) return RT[name] === 'wait' || RT[name] === 'fail' ? null : RT[name];
     RT[name] = 'wait';
-    fetch('roads/' + name + '.bin').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(gunzip)
+    fetch('roads/' + name + '.txt').then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(t => Uint8Array.from(atob(t.trim()), c => c.charCodeAt(0)).buffer).then(gunzip)
       .then(b => { RT[name] = parseRoads(b); drawRoads(); }).catch(() => { RT[name] = 'fail'; });
     return null; };
   fetch('roads/index.json').then(r => r.json()).then(a => { RIDX = new Set(a.map(([i,j]) => i + '_' + j)); drawRoads(); }).catch(() => {});
