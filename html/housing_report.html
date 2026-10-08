@@ -1245,6 +1245,17 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
       labels:['33%− ומטה','33%− עד 18%−','18%− עד 7%−','7%± (ממוצע)','7%+ עד 22%+','22%+ עד 49%+','49%+ ומעלה'],
       note:'מחיר ריאלי למ"ר, אחרי ניכוי אפקט החודש והשטח. רק בניינים עם 3 עסקאות לפחות.' }
   };
+  // SA variables and building distances (map page only)
+  const SAV = {}, vdNote = k => { const e = vdOf(k); return e ? `${e.d} מקור: ${VD.src[e.s] || e.s}.` : ''; };
+  const numF = (v, share) => share ? (v*100).toFixed(v < 0.1 ? 1 : 0) + '%' : Math.abs(v) >= 100 ? fmt(Math.round(v)) : Math.abs(v) >= 10 ? v.toFixed(0) : Math.abs(v) >= 1 ? v.toFixed(1) : v.toFixed(2);
+  if (isMap && meta.sa) {
+    for (const d of meta.sa.vars) { SAV[d.k] = d; if (d.k === 'junc_dens') continue;   // has its own metric (junc)
+      METRICS['sa_' + d.k] = { title: d.lab, cont: [d.lg ? Math.max(d.lo, 1e-3) : d.lo, d.hi > d.lo ? d.hi : d.lo + 1, d.lg], tf: v => numF(v, d.share),
+        note: 'לפי האזור הסטטיסטי (2011) של החלקה. ' + vdNote(d.k), sa: d.k, share: d.share }; }
+    for (const [k, f, t] of [['d_cbd', 'dc', 'מרחק למרכז תל אביב (ק"מ)'], ['d_rail', 'dr', 'מרחק לתחנת רכבת או רק"ל (ק"מ)'], ['d_coast', 'ds', 'מרחק לחוף (ק"מ)']])
+      METRICS['dist_' + k] = { title: t, cont: [k === 'd_cbd' ? 2 : 0.3, k === 'd_cbd' ? 150 : 40, true], tf: v => numF(v, false), note: vdNote(k), field: f };
+    METRICS.junc.note += ' ' + vdNote('junc_dens');
+  }
   let metric = 'price';
   try { const m = localStorage.getItem('v3-metric'); if (m && METRICS[m]) metric = m; } catch(e){}
 
@@ -1362,8 +1373,11 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
     const val = {
       price: i => (F.pp[i] || F.pg[i]) ? (F.pp[i] || F.pg[i])*100 : null,
       chg: i => gchg[F.g[i]], turn: i => gturn[F.g[i]],
-      junc: i => F.j[i] ? F.j[i] - 1 : null, bfe: i => F.bf[i] ? F.bf[i]/1000 - 3 : null,
+      junc: i => F.s[i] ? SAV.junc_dens.x[F.s[i] - 1] ?? null : null, bfe: i => F.bf[i] ? F.bf[i]/1000 - 3 : null,
       fl: i => F.f[i] || null, dec: i => F.d[i] ? F.d[i] + 180 : null,
+      ...Object.fromEntries(Object.entries(METRICS).filter(([, m]) => m.sa).map(([k, m]) => { const x = SAV[m.sa].x;
+        return [k, i => F.s && F.s[i] ? x[F.s[i] - 1] ?? null : null]; })),
+      ...Object.fromEntries(Object.entries(METRICS).filter(([, m]) => m.field).map(([k, m]) => [k, i => F[m.field] && F[m.field][i] ? Math.exp((F[m.field][i] - 1)/25 - 3) : null])),
       ren: i => { const f = F.f[i], d = F.d[i]; if (!f || !d || f > 4 || d + 180 >= 198) return null;
         const p = F.pl[i]*100; return p < REN_T ? 0 : p < 25000 ? 1 : 2; }
     };
@@ -1374,7 +1388,7 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
     const classify = () => { const m = METRICS[metric], f = val[metric], K = nCls(m); counts = new Array(K + 1).fill(0);
       for (let i = 0; i < n; i++) { const v = f(i); let k;
         if (v === null || v === undefined) k = 255;
-        else if (m.cont) { const t = scaleT(v, m.cont[0], m.cont[1], m.cont[2]); k = t === null ? 255 : Math.min(NL - 1, Math.floor(t*NL)); }
+        else if (m.cont) { const t = m.cont[2] && v <= 0 ? 0 : scaleT(v, m.cont[0], m.cont[1], m.cont[2]); k = t === null ? 255 : Math.min(NL - 1, Math.floor(t*NL)); }   // log scale: a zero gets the lowest colour
         else k = metric === 'ren' ? v : cls(m, v);
         klass[i] = k; counts[k === 255 ? K : k]++; } };
 
@@ -1422,7 +1436,8 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
         `<span class="k">מחיר למ"ר, חלקה:</span> ${pp ? '<b>'+fmt(pp)+' ₪</b>' : na} · <span class="k">גוש:</span> ${pg ? fmt(pg)+' ₪' : na}<br>`+
         `<span class="k">עסקאות בחלקה 2015–2025:</span> ${fmt(F.nd[i])} · <span class="k">מחזור בגוש:</span> ${tn != null ? (tn*100).toFixed(1)+' ל־100 דירות בשנה' : na}<br>`+
         `<span class="k">שינוי בגוש 2015→2025:</span> ${ch != null ? '<b>'+(ch>=0?'+':'')+pct(ch)+'</b>' : na}<br>`+
-        `<span class="k">אפקט בניין:</span> ${F.bf[i] ? ((Math.exp(F.bf[i]/1000-3)-1)>=0?'+':'') + pct(Math.exp(F.bf[i]/1000-3)-1) : na} · <span class="k">צמתים לקמ"ר באזור:</span> ${F.j[i] ? fmt(F.j[i]-1) : na}`+
+        `<span class="k">אפקט בניין:</span> ${F.bf[i] ? ((Math.exp(F.bf[i]/1000-3)-1)>=0?'+':'') + pct(Math.exp(F.bf[i]/1000-3)-1) : na} · <span class="k">צמתים לקמ"ר באזור:</span> ${(v => v == null ? na : fmt(Math.round(v)))(val.junc(i))}`+
+        ((METRICS[metric].sa || METRICS[metric].field) ? `<br><span class="k">${METRICS[metric].title}:</span> <b>${(v => v == null ? 'אין נתון' : METRICS[metric].tf(v))(val[metric](i))}</b>` : '') +
         (ren ? `<br><span class="k">ישן ונמוך:</span> ${pl >= REN_T ? '<b>התחדשות רווחית</b>' : 'מתחת לסף'} (${fmt(pl)} ₪ למ"ר)` : '');
       fixBidi(tip); tip.hidden = false;
       const box = map.getContainer().getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
@@ -1467,6 +1482,16 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
         `<div class="card">${m.labels.map((l,k) => `<div style="display:flex;justify-content:space-between;gap:8px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${colors[k]};margin-inline-end:6px"></span>${l}</span><span>${fmt(counts[k])}</span></div>`).join('')}</div>`;
       fixBidi(document.getElementById('metricInfo')); };
     const msel = document.getElementById('metric');
+    if (!msel.dataset.grouped) { msel.dataset.grouped = '1';
+      const og0 = document.createElement('optgroup'); og0.label = 'חלקה, בניין וגוש'; [...msel.options].forEach(o => og0.appendChild(o)); msel.appendChild(og0);
+      const GR = [['מיקום (מרחק מהבניין)', k => /^d_/.test(k)], ['אזור סטטיסטי: רשת רחובות', k => /junc|street|deadend|fourway|orient|circuity|road_share/.test(k)],
+        ['אזור סטטיסטי: צפיפות, שימושים ומסחר', k => /units_dens|pop_dens|parcel_med|mix|comm_|school/.test(k)], ['אזור סטטיסטי: תחבורה וחניה', k => /bus|parking/.test(k)],
+        ['אזור סטטיסטי: חברה והצבעה', k => /ses21|haredi|arab|turnout/.test(k)]];
+      const extra = Object.keys(METRICS).filter(k => k.startsWith('sa_') || k.startsWith('dist_'));
+      for (const [lab, f] of GR) { const og = document.createElement('optgroup'); og.label = lab;
+        extra.filter(k => f(k.replace(/^sa_|^dist_/, ''))).forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = METRICS[k].title; og.appendChild(o); });
+        if (og.children.length) msel.appendChild(og); }
+      msel.value = metric; }
     const setMetric = k => { metric = k; msel.value = k; try { localStorage.setItem('v3-metric', k); } catch(e){}
       classify(); readColors(); draw(); drawLegend(); };
     msel.addEventListener('change', () => setMetric(msel.value));
