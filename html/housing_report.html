@@ -1148,6 +1148,14 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
   const spectral = t => { t = Math.max(0, Math.min(1, t)); let i = 0; while (i < SPEC.length-2 && SPEC[i+1][0] < t) i++;
     const [t0,r0,g0,b0] = SPEC[i], [t1,r1,g1,b1] = SPEC[i+1], f = (t - t0)/(t1 - t0);
     return `rgb(${Math.round(r0+(r1-r0)*f)},${Math.round(g0+(g1-g0)*f)},${Math.round(b0+(b1-b0)*f)})`; };
+  // continuous scale: value -> t in [0,1] between lo and hi (log or linear), clamped
+  const scaleT = (v, lo, hi, lg) => { if (v == null || !isFinite(v) || (lg && v <= 0)) return null;
+    const t = lg ? Math.log(v/lo)/Math.log(hi/lo) : (v - lo)/(hi - lo); return Math.max(0, Math.min(1, t)); };
+  const scaleV = (t, lo, hi, lg) => lg ? lo*Math.pow(hi/lo, t) : lo + (hi - lo)*t;
+  const gradCSS = () => 'linear-gradient(to right,' + Array.from({ length: 11 }, (_, k) => spectral(k/10)).join(',') + ')';
+  const gradBar = (lo, hi, lg, f, nt = 5) => `<div dir="ltr" style="margin:4px 2px 0"><div style="height:12px;border-radius:3px;background:${gradCSS()}"></div>` +
+    `<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums">` +
+    Array.from({ length: nt }, (_, k) => `<span>${f(scaleV(k/(nt-1), lo, hi, lg))}</span>`).join('') + `</div></div>`;
   const AR = J('areas-data'), AREA = Object.fromEntries(AR.areas.map(a => [a.key, a]));
   const normName = x => (x || '').replace(/[\s\-־–'"״׳*]/g, '');
   const AKEY = {}; AR.areas.forEach(a => { if (a.level === 'city') AKEY[normName(a.name)] = a.key; });
@@ -1197,23 +1205,23 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
 
   // ---------- metrics ----------
   const METRICS = {
-    price:{ title:'מחיר למ"ר, 2023–2026 (₪)', breaks:[10000,14000,18000,22000,27000,33000,40000], tokens:['--v0','--v1','--v2','--v3','--v4','--v5','--v6','--v7'],
+    price:{ title:'מחיר למ"ר, 2023–2026 (₪)', cont:[8000, 50000, true], tf: v => fmt(Math.round(v/1000)) + 'K', breaks:[10000,14000,18000,22000,27000,33000,40000], tokens:['--v0','--v1','--v2','--v3','--v4','--v5','--v6','--v7'],
       labels:['עד 10 אלף','10–14 אלף','14–18 אלף','18–22 אלף','22–27 אלף','27–33 אלף','33–40 אלף','40 אלף ומעלה'],
       note:'חציון החלקה כשיש בה 3 עסקאות לפחות, אחרת חציון הגוש.' },
-    chg:{ title:'שינוי במחיר למ"ר בגוש, 2014–16 עד 2023–25', breaks:[.2,.35,.5,.65,.8,1], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
+    chg:{ title:'שינוי במחיר למ"ר בגוש, 2014–16 עד 2023–25', cont:[0, 1.2, false], tf: v => '+' + Math.round(v*100) + '%', breaks:[.2,.35,.5,.65,.8,1], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
       labels:['עד 20%','20%–35%','35%–50%','50%–65%','65%–80%','80%–100%','100% ומעלה'], note:'נומינלי. רק גושים עם 10 עסקאות לפחות בכל תקופה.' },
-    turn:{ title:'עסקאות ל־100 דירות בשנה (גוש)', breaks:[.015,.025,.035,.045,.06], tokens:['--s0','--s1','--s2','--s3','--s4','--s5'],
+    turn:{ title:'עסקאות ל־100 דירות בשנה (גוש)', cont:[0.01, 0.08, true], tf: v => (v*100).toFixed(1), breaks:[.015,.025,.035,.045,.06], tokens:['--s0','--s1','--s2','--s3','--s4','--s5'],
       labels:['עד 1.5','1.5–2.5','2.5–3.5','3.5–4.5','4.5–6','6 ומעלה'], note:'2015–2025. כולל מכירות ראשונות מקבלן.' },
-    fl:{ title:'קומות בבניין', breaks:[2,4,6,9,15,25], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
+    fl:{ title:'קומות בבניין', cont:[1, 40, true], tf: v => Math.round(v), breaks:[2,4,6,9,15,25], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
       labels:['1','2–3','4–5','6–8','9–14','15–24','25 ומעלה'], note:'הערך הגבוה בחלקה, לפי הגזטיר.' },
-    dec:{ title:'עשור הבנייה', breaks:[195,196,197,198,199,200,201], tokens:['--v0','--v1','--v2','--v3','--v4','--v5','--v6','--v7'],
+    dec:{ title:'עשור הבנייה', cont:[194, 202, false], tf: v => Math.round(v)*10, breaks:[195,196,197,198,199,200,201], tokens:['--v0','--v1','--v2','--v3','--v4','--v5','--v6','--v7'],
       labels:['לפני 1950','שנות ה־50','שנות ה־60','שנות ה־70','שנות ה־80','שנות ה־90','שנות ה־2000','2010 ואילך'], note:'חציון שנות הבנייה בחלקה.' },
     ren:{ title:'בניינים ישנים ונמוכים: האם התחדשות רווחית?', breaks:[1,2], tokens:['--s1','--s3','--warm'],
       labels:['מחיר מתחת לסף','עד 25 אלף ₪ למ"ר','מעל 25 אלף ₪ למ"ר'],
       note:'רק בניינים מלפני 1980 עם עד 4 קומות. הסף: 17,250 ₪ למ"ר (עלות 10,000 ₪ למ"ר, מכפיל 3). אפור = לא מועמד.' },
-    junc:{ title:'צמתים לקמ"ר של שטח עירוני', breaks:[25,50,75,100,130,160], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
+    junc:{ title:'צמתים לקמ"ר של שטח עירוני', cont:[15, 200, true], tf: v => Math.round(v), breaks:[25,50,75,100,130,160], tokens:['--c0','--c1','--c2','--c3','--c4','--c5','--c6'],
       labels:['עד 25','25–50','50–75','75–100','100–130','130–160','160 ומעלה'], note:'לפי אזור סטטיסטי (2011). צומת = מפגש של 3 רחובות לפחות ברשת הנסיעה של OpenStreetMap (דרך Overture Maps), אחרי איחוד נקודות במרחק עד 20 מ\'.' },
-    bfe:{ title:'אפקט קבוע של בניין: מחיר למ"ר מול הממוצע', breaks:[-0.4,-0.2,-0.07,0.07,0.2,0.4], tokens:['--d0','--d1','--d2','--d3','--d4','--d5','--d6'],
+    bfe:{ title:'אפקט קבוע של בניין: מחיר למ"ר מול הממוצע', cont:[-0.6, 0.6, false], tf: v => (v >= 0 ? '+' : '') + Math.round((Math.exp(v)-1)*100) + '%', breaks:[-0.4,-0.2,-0.07,0.07,0.2,0.4], tokens:['--d0','--d1','--d2','--d3','--d4','--d5','--d6'],
       labels:['33%− ומטה','33%− עד 18%−','18%− עד 7%−','7%± (ממוצע)','7%+ עד 22%+','22%+ עד 49%+','49%+ ומעלה'],
       note:'מחיר ריאלי למ"ר, אחרי ניכוי אפקט החודש והשטח. רק בניינים עם 3 עסקאות לפחות.' }
   };
@@ -1341,16 +1349,22 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
     };
     const cls = (m, v) => { let k = 0; while (k < m.breaks.length && v >= m.breaks[k]) k++; return k; };
     let klass = new Uint8Array(n), counts = [];
-    const classify = () => { const m = METRICS[metric], f = val[metric]; counts = new Array(m.tokens.length + 1).fill(0);
-      for (let i = 0; i < n; i++) { const v = f(i); const k = (v === null || v === undefined) ? 255 : (metric === 'ren' ? v : cls(m, v));
-        klass[i] = k; counts[k === 255 ? m.tokens.length : k]++; } };
+    const NL = 64;                                    // colour levels for continuous metrics
+    const nCls = m => m.cont ? NL : m.tokens.length;
+    const classify = () => { const m = METRICS[metric], f = val[metric], K = nCls(m); counts = new Array(K + 1).fill(0);
+      for (let i = 0; i < n; i++) { const v = f(i); let k;
+        if (v === null || v === undefined) k = 255;
+        else if (m.cont) { const t = scaleT(v, m.cont[0], m.cont[1], m.cont[2]); k = t === null ? 255 : Math.min(NL - 1, Math.floor(t*NL)); }
+        else k = metric === 'ren' ? v : cls(m, v);
+        klass[i] = k; counts[k === 255 ? K : k]++; } };
 
     // canvas layer in its own pane
     const cv = document.createElement('canvas'); cv.className = 'leaflet-zoom-hide';
     map.getPane('pts').appendChild(cv);
     const ctx = cv.getContext('2d');
     let colors = [], nodata = '';
-    const readColors = () => { const m = METRICS[metric], K = m.tokens.length; colors = m.tokens.map((_, i) => spectral(K === 1 ? 0 : i/(K-1))); nodata = tok('--nodata'); };
+    const readColors = () => { const m = METRICS[metric], K = nCls(m);
+      colors = m.cont ? Array.from({ length: NL }, (_, i) => spectral((i + 0.5)/NL)) : m.tokens.map((_, i) => spectral(K === 1 ? 0 : i/(K-1))); nodata = tok('--nodata'); };
     const draw = () => {
       const size = map.getSize(), pad = size.multiplyBy(0.3), tl = map.containerPointToLayerPoint([0,0]).subtract(pad);
       const W = size.x + 2*pad.x, H = size.y + 2*pad.y, dpr = window.devicePixelRatio || 1;
@@ -1419,6 +1433,12 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
 
     const legend = document.getElementById('legend');
     const drawLegend = () => { const m = METRICS[metric];
+      if (m.cont) { const K = NL, nd = counts[K], tot = counts.reduce((a, b) => a + b, 0);
+        legend.innerHTML = `<h3>${m.title}</h3>` + gradBar(m.cont[0], m.cont[1], m.cont[2], m.tf) +
+          `<div class="row"><span class="sw" style="background:${nodata}"></span><span>אין נתון</span><span class="n">${fmt(nd)}</span></div>` +
+          `<div class="note">${m.note} סולם רציף${m.cont[2] ? ' לוגריתמי' : ''}; ערכים מחוץ לטווח נצבעים בקצה. ${fmt(tot - nd)} חלקות עם נתון.</div>`; fixBidi(legend);
+        document.getElementById('metricInfo').innerHTML = `<h3>${m.title}</h3><p>${m.note}</p><div class="card">${gradBar(m.cont[0], m.cont[1], m.cont[2], m.tf)}</div>`;
+        fixBidi(document.getElementById('metricInfo')); return; }
       legend.innerHTML = `<h3>${m.title}</h3>` + m.labels.map((l,k) =>
         `<div class="row"><span class="sw" style="background:${colors[k]}"></span><span>${l}</span><span class="n">${fmt(counts[k])}</span></div>`).join('') +
         `<div class="row"><span class="sw" style="background:${nodata}"></span><span>${metric==='ren'?'לא מועמד / אין נתון':'אין נתון'}</span><span class="n">${fmt(counts[m.tokens.length])}</span></div>`+
@@ -1921,8 +1941,10 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
       vYear.disabled = !v.yearly; vPlay.disabled = !v.yearly; vYearLab.textContent = v.yearly ? y : '—';
       const vals = valsFor(L_, v, yIdx).map((x, i) => okUnit(L_, i, v) ? x : null);
       const pool = v.yearly ? L_.yearly[v.k].flat() : vals;
-      const br = [1,2,3,4,5,6].map(j => quant(pool, j/7)).filter((x, i, a) => isFinite(x) && (i === 0 || x > a[i-1]));
-      const col = x => { if (x == null || !isFinite(x)) return null; let i = 0; while (i < br.length && x >= br[i]) i++; return spectral(br.length ? i/br.length : 0.5); };
+      const pos = pool.filter(x => x != null && isFinite(x) && (!v.lg || x > 0)), lgS = v.lg && pos.length > 0;
+      const lo = quant(pos, 0.02), hi = quant(pos, 0.98), same = !(hi > lo);
+      const br = [];
+      const col = x => { if (x == null || !isFinite(x)) return null; if (same) return spectral(0.5); const t = scaleT(lgS ? Math.max(x, lo) : x, lo, hi, lgS); return t === null ? null : spectral(t); };
       cur = { vals, br, v, lev, L_ };
       if (layer) layer.remove();
       layer = L.geoJSON(geoOf(lev), { renderer:vr, style: f => { const c = col(vals[f.properties.i]);
@@ -1931,22 +1953,22 @@ dialog#areaDlg::backdrop{background:rgba(44,62,80,.55)}
           ly.on('click', () => { const nm = L_.names[f.properties.i]; const k = lev === 'region' ? 'r:'+nm : lev === 'county' ? 'n:'+nm : lev === 'city' ? AKEY[normName(nm)] : null;
             if (k && AREA[k]) { const a = AREA[k]; document.getElementById('dlgTitle').textContent = `${a.name} (${LEVEL[a.level]})`; renderArea(document.getElementById('dlgBody'), k, true); dlg.showModal ? dlg.showModal() : dlg.setAttribute('open',''); } }); } }).addTo(vmap);
       // legend
-      const edges = [null, ...br, null];
-      document.getElementById('vleg').innerHTML = `<h3>${v.lab}${v.yearly ? ' · ' + y : ''}</h3>` + edges.slice(0, -1).map((e, i) =>
-        `<div class="row"><span class="sw" style="background:${spectral(br.length ? i/br.length : 0.5)}"></span><span>${e == null ? 'עד ' + fmtV(v, edges[1]) : edges[i+1] == null ? fmtV(v, e) + ' ומעלה' : fmtV(v, e) + ' – ' + fmtV(v, edges[i+1])}</span><span></span></div>`).join('') +
-        `<div class="row"><span class="sw" style="background:#BEBEBE"></span><span>אין נתון</span><span></span></div>`;
+      document.getElementById('vleg').innerHTML = `<h3>${v.lab}${v.yearly ? ' · ' + y : ''}</h3>` + gradBar(lo, hi, lgS, x => fmtV(v, x)) +
+        `<div class="row"><span class="sw" style="background:#BEBEBE"></span><span>אין נתון</span><span></span></div>` +
+        `<div class="note">סולם רציף${lgS ? ' לוגריתמי' : ''} בין האחוזון ה־2 ל־98 של כל השנים יחד.</div>`;
       fixBidi(document.getElementById('vleg'));
       // histogram 1: units of the chosen level
       const good = vals.filter(x => x != null && isFinite(x) && (!v.lg || x > 0));
-      const lo = quant(pool.filter(x => !v.lg || x > 0), 0.01), hi = quant(pool.filter(x => !v.lg || x > 0), 0.99);
-      const nb = 20, edgesH = Array.from({ length: nb+1 }, (_, j) => v.lg && lo > 0 ? lo*Math.pow(hi/lo, j/nb) : lo + (hi - lo)*j/nb);
+      const hlo = quant(pool.filter(x => !v.lg || x > 0), 0.01), hhi = quant(pool.filter(x => !v.lg || x > 0), 0.99);
+      const nb = 20, edgesH = Array.from({ length: nb+1 }, (_, j) => v.lg && hlo > 0 ? hlo*Math.pow(hhi/hlo, j/nb) : hlo + (hhi - hlo)*j/nb);
       const cnt = new Array(nb).fill(0); good.forEach(x => { let j = 0; while (j < nb-1 && x >= edgesH[j+1]) j++; if (x < edgesH[0]) j = 0; cnt[j]++; });
       const med = quant(good, 0.5);
       const drawHist = (id, counts, edges_, medV, v_) => { const el = document.getElementById(id), W = 520, H = +el.viewBox.baseVal.height, L0 = 36, R0 = 8, T0 = 10, B = 24, n = counts.length;
         const mx = Math.max(...counts, 1), bw = (W - L0 - R0)/n, yy = c => H - B - c/mx*(H - T0 - B);
         let s = '';
         [0, 0.5, 1].forEach(t => { const c = Math.round(mx*t); s += `<line class="grid" x1="${L0}" x2="${W-R0}" y1="${yy(c)}" y2="${yy(c)}"></line><text x="${L0-4}" y="${yy(c)+4}" text-anchor="end" style="direction:ltr">${fmt(c)}</text>`; });
-        counts.forEach((c, j) => { s += `<rect x="${L0 + j*bw + 0.5}" y="${yy(c)}" width="${Math.max(bw-1, 0.5)}" height="${H - B - yy(c)}" fill="${spectral(j/(n-1))}" opacity="0.9"><title>${fmtV(v_, edges_[j])} – ${fmtV(v_, edges_[j+1])}: ${fmt(c)}</title></rect>`; });
+        counts.forEach((c, j) => { const mid = v_.lg && edges_[j] > 0 ? Math.sqrt(edges_[j]*edges_[j+1]) : (edges_[j] + edges_[j+1])/2;
+          s += `<rect x="${L0 + j*bw + 0.5}" y="${yy(c)}" width="${Math.max(bw-1, 0.5)}" height="${H - B - yy(c)}" fill="${col(mid) || spectral(j/(n-1))}" opacity="0.9"><title>${fmtV(v_, edges_[j])} – ${fmtV(v_, edges_[j+1])}: ${fmt(c)}</title></rect>`; });
         if (medV != null && isFinite(medV)) { let j = 0; while (j < n-1 && medV >= edges_[j+1]) j++; const f = v_.lg && edges_[j] > 0 ? Math.log(medV/edges_[j])/Math.log(edges_[j+1]/edges_[j]) : (medV - edges_[j])/(edges_[j+1] - edges_[j]);
           const xm = L0 + (j + Math.max(0, Math.min(1, f)))*bw; s += `<line x1="${xm}" x2="${xm}" y1="${T0}" y2="${H-B}" stroke="#2c3e50" stroke-width="2" stroke-dasharray="4 3"></line>`; }
         [0, Math.floor(n/2), n].forEach(j => { s += `<text x="${L0 + j*bw}" y="${H-6}" text-anchor="middle" style="direction:ltr">${fmtV(v_, edges_[j])}</text>`; });
