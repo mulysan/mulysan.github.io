@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="author" content="Shmuel San">
 <title>Polymarket Traders</title>
+<meta name="description" content="Profit and loss of 2.1 million Polymarket wallets, what happens after large orders, how much trading looks like pushing the price, and whether knowing who trades beats the price.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -119,6 +120,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule);
 .tile span { font-size: 13px; color: var(--ink-2); }
 a { color: var(--accent); text-underline-offset: 2px; }
 svg rect[data-tip] { cursor: crosshair; }
+.series { font: 13px/1.5 var(--body); color: var(--ink-3); } .series a { color: var(--ink-2); } .series b { color: var(--ink); font-weight: 600; }
 html, body { margin: 0; }
 [hidden] { display: none !important; }
 </style>
@@ -126,10 +128,11 @@ html, body { margin: 0; }
 <body>
 <div class="wrap">
 <header>
+  <nav class="series">A three-part series on Polymarket: <a href="polymarket.html">1 · Calibration</a> · <b>2 · Traders</b> · <a href="polymarket-israel.html">3 · Israel 2026</a></nav>
   <div class="eyebrow">Prediction markets · traders</div>
   <h1>Who wins on Polymarket, and whose trades carry information?</h1>
   <div class="byline">Shmuel San · October 2026</div>
-  <p class="lede col">Every trade on Polymarket is recorded with the wallet that made it. This page reconstructs the profit and loss of 2.1 million wallets across 74,000 resolved markets, and follows the price after 757,000 large orders to ask which trades carried information and which only moved the price for a while, whether winners keep winning, what separates orders followed by momentum from those followed by reversal, and how much trading looks like an attempt to push the price. It is a companion to <a href="polymarket.html">How much do Polymarket prices know, and when?</a></p>
+  <p class="lede col">Every trade on Polymarket is recorded with the wallet that made it. This page reconstructs the profit and loss of 2.1 million wallets across 74,000 resolved markets, and follows the price after 757,000 large orders to ask which trades carried information and which only moved the price for a while, whether winners keep winning, what separates orders followed by momentum from those followed by reversal, and how much trading looks like an attempt to push the price. It is the second of three pages: the <a href="polymarket.html">first</a> asks how well prices predict outcomes, and the <a href="polymarket-israel.html">third</a> applies these lessons to the 2026 Israeli election markets.</p>
   <div class="meta"><span><b>2,099,419</b> wallets</span><span><b>173.9m</b> trade records</span><span><b>74,099</b> markets</span><span>Oct 2023–Oct 2026</span></div>
 </header>
 
@@ -139,16 +142,16 @@ html, body { margin: 0; }
 <li><div><b>Most traders lose, and a few win nearly everything.</b> 30% of wallets made money; the median wallet lost about $1. The top 1% of wallets took 94% of all gains ($497m), the top 0.1% took 73%, and the 100 biggest winners alone took 37%. Losses are just as concentrated: the worst 1% of wallets account for 84% of all losses.</div></li>
 <li><div><b>Size and role matter.</b> Small wallets lose a large share of what they spend (−25% for wallets that traded under $100). Only wallets that traded more than $1m are profitable in aggregate (+$128m, +1.7% of money spent). Wallets that mainly post quotes made $103m; wallets that mainly take quotes lost $83m.</div></li>
 <li><div><b>Skill persists, but weakly.</b> Among wallets that spent at least $1,000 in both halves of the sample, 48% of first-half winners profit again, against 28% of first-half losers. The rank correlation of returns across halves is only 0.08.</div></li>
-<li><div><b>Large orders carry information, and the market prices it about right.</b> A large order (≥ $1,000) moves the price by 0.7¢ in its direction on average; about a third of that fades within a day. The outcome bears the order out by 0.85¢, so almost nothing is left after the immediate move. Small orders do the opposite: they push the price slightly too far.</div></li>
+<li><div><b>Large orders carry information, and the market prices it about right.</b> A large order (≥ $1,000) moves the price by 0.7¢ in its direction on average; about a third of that fades within a day. The outcome bears the order out by 0.85¢, so almost nothing is left after the immediate move. Small orders do the opposite: they push the price slightly too far, in line with the overreaction found in <a href="polymarket.html#sec-reg">price data</a>.</div></li>
 <li><div><b>Mentions markets move most and revert; sports and big one-sided bettors look informed.</b> In "will X say / tweet …" markets, a large order moves the price by 3.1¢ and that move is gone a week later, though the outcome still bears the order out by about 2¢ (imprecisely estimated). In sports, large orders know more than the price absorbs. Wallets that take a large one-sided position in a market (≥ 10% of its volume, ≥ 90% in one direction) are strongly informed, in elections too, and the market under-reacts to them by about 2¢.</div></li>
 <li><div><b>Large orders are followed by momentum about as often as by reversal, and the difference is mostly information.</b> Over the following week, 38% of large orders see the price keep moving their way and 35% see it come back. Momentum orders turned out right 77% of the time against a 58% market probability; reversal orders 29% against 50%. Part of the gap is mechanical: on a 1-day split the edge is about ±10 points rather than ±20. Dominant one-sided traders get more momentum and fewer reversals; new wallets less momentum.</div></li>
 <li><div><b>"Insider-looking" new wallets are mostly not insiders.</b> Large orders from brand-new wallets that trade only one to three markets carry no information on average, and their price impact fades within a day.</div></li>
-<li><div><b>Trading that looks like pushing the price is a few percent of large orders, and sustained campaigns are rare.</b> No single trade can be proven manipulative, but a push leaves a trace: it moves the price, the move fades, and the trader either pushes again or sells into the move. Orders that moved the price only for the move to fade are 5.5% of large-order dollars, and they were on the losing side (4–6¢ worse than the price they paid). Wallets that pushed the same market three or more times after it faded account for 1.0% (1m), and on average they were not wrong. Elections have fewer such orders than crypto or geopolitics markets.</div></li>
-<li><div><b>Knowing who holds which side beats the price, but only by about 1%.</b> Trained on markets resolving before October 2025 and tested on the following year, a model using the price plus wallet positions improves the Brier score a day before the event by 1.3% (95% interval 0.6–2.0%). About half of that comes from recalibrating the price alone, correcting known biases such as overreaction. A week out the gain is smaller and not distinguishable from recalibration. The wallet signal is weak and not cleanly about skill: the side held by proven forecasters wins a little more often than its price implies, but so does the side held by proven losers.</div></li>
+<li><div><b>Trading that looks like pushing the price is a few percent of large orders, and sustained campaigns are rare.</b> No single trade can be proven manipulative, but a push leaves a trace: it moves the price, the move fades, and the trader either pushes again or sells into the move. Orders that moved the price only for the move to fade are 5.5% of large-order dollars, and they were on the losing side (4–6¢ worse than the price they paid). Wallets that pushed the same market three or more times after it faded account for 1.0% (1m), and on average they were not wrong. Elections have fewer such orders than crypto or geopolitics markets; the Israeli election markets look like other election markets of their size (<a href="polymarket-israel.html#sec-push">Israel page</a>).</div></li>
+<li><div><b>Knowing who holds which side beats the price, but only by about 1%.</b> Trained on markets resolving before October 2025 and tested on the following year, a model using the price plus wallet positions improves the Brier score a day before the event by 1.3% (95% interval 0.6–2.0%). About half of that comes from recalibrating the price alone, correcting known biases such as overreaction. A week out the gain is smaller and not distinguishable from recalibration. The wallet signal is weak and not cleanly about skill: the side held by proven forecasters wins a little more often than its price implies, but so does the side held by proven losers. Applied to the Israeli markets, it barely moves the price (<a href="polymarket-israel.html#sec-books">Israel page</a>).</div></li>
 </ol>
 </section>
 
-<section>
+<section id="sec-pnl">
   <h2>1 · Profits and losses across traders</h2>
   <p class="col">For every wallet and market: cash received from sales, minus cash paid for purchases, plus $1 for each share of the winning outcome still held at resolution. This is exact even when shares were created by splitting a dollar into a Yes and a No share, or merged back. Summed over all wallets, profits in each market net to zero within 1% of its volume in 98% of markets, a check that no trades are missing. Fees, liquidity rewards and markets outside the sample are not included, and one person can control several wallets.</p>
   <div class="tiles"><div class="tile"><b>2,099,419</b><span>wallets</span></div><div class="tile"><b>30%</b><span>made money</span></div><div class="tile"><b>94%</b><span>of all gains went to the top 1%</span></div><div class="tile"><b>84%</b><span>of all losses came from the bottom 1%</span></div></div>
@@ -163,7 +166,7 @@ html, body { margin: 0; }
   <div class="figure"><h3>By event type</h3><div class="tablewrap"><table class="stats"><thead><tr><th>Event type</th><th>Wallets</th><th>Made money</th><th>Total gains</th><th>Top 1% share of gains</th></tr></thead><tbody><tr><th scope="row">Sports</th><td>1,406,769</td><td>28%</td><td>$122.4m</td><td>93%</td></tr><tr><th scope="row">Elections</th><td>1,016,825</td><td>36%</td><td>$281.6m</td><td>95%</td></tr><tr><th scope="row">Politics</th><td>579,909</td><td>44%</td><td>$30.2m</td><td>95%</td></tr><tr><th scope="row">Crypto</th><td>511,946</td><td>55%</td><td>$43.8m</td><td>89%</td></tr><tr><th scope="row">Geopolitics</th><td>508,138</td><td>44%</td><td>$51.1m</td><td>92%</td></tr><tr><th scope="row">Culture</th><td>504,196</td><td>35%</td><td>$17.1m</td><td>92%</td></tr><tr><th scope="row">Economy/Fed</th><td>419,656</td><td>42%</td><td>$15.0m</td><td>91%</td></tr><tr><th scope="row">Mentions/tweets</th><td>190,680</td><td>39%</td><td>$12.0m</td><td>87%</td></tr><tr><th scope="row">Tech/Science</th><td>155,902</td><td>50%</td><td>$5.7m</td><td>87%</td></tr><tr><th scope="row">Esports</th><td>86,656</td><td>46%</td><td>$9.8m</td><td>85%</td></tr><tr><th scope="row">Other</th><td>41,223</td><td>61%</td><td>$2.0m</td><td>82%</td></tr></tbody></table></div></div>
 </section>
 
-<section>
+<section id="sec-persist">
   <h2>2 · Is skill persistent?</h2>
   <p class="col">Is a profitable wallet just lucky? Markets are split at the median resolution date (August 2025), and wallets are ranked by their return in each half. Return is used rather than total profit, because total profit is driven mainly by how much a wallet bets. The diagonal of the table would be 20% everywhere if past returns said nothing about future ones.</p>
 <p class="col">Wallets in the best and worst quintiles tend to end up in either extreme again: these are wallets that make large, risky bets. Past winners are profitable again more often than past losers (48% against 28%), and the top return quintile earns +1.7% in the second half against −0.6% for the bottom quintile, though the middle quintiles earn about +1% too. The rank correlation is only 0.08. A small group of skilled traders exists; most of the dispersion is luck.</p>
@@ -171,7 +174,7 @@ html, body { margin: 0; }
     <p class="cap">23,932 wallets that spent at least $1,000 in each half. Return = profit divided by dollars spent buying. Each row of the first table sums to 100%.</p></div>
 </section>
 
-<section>
+<section id="sec-orders">
   <h2>3 · What happens after a large order</h2>
   <p class="col">An order is a wallet's purchases or sales in one market at one moment, where the wallet traded against quotes already in the book. For every order of $1,000 or more placed at least an hour before the event at a price between 2¢ and 98¢, the price is followed from just before the order to resolution. All moves are signed so that positive is in the order's direction.</p>
 <p class="col">Two numbers separate information from noise. <b>Information</b> is the final payoff minus the price before the order: how right the order was. <b>Left after the move</b> is the payoff minus the price right after the order. If it is positive, the market under-reacted and the order knew more than the price absorbed. If it is negative, the order pushed the price too far, as noise or manipulation would. This is the observational counterpart of the randomized trades in Rhode and Strumpf's field experiment and Camerer's racetrack bets.</p>
@@ -191,7 +194,7 @@ html, body { margin: 0; }
   </div>
 </section>
 
-<section>
+<section id="sec-wallets">
   <h2>4 · Informed traders and would-be manipulators</h2>
   <p class="col">Three groups stand in for private information and manipulation.</p>
 <ul class="plain col">
@@ -208,7 +211,7 @@ html, body { margin: 0; }
     <p class="cap">Wallets holding at least 10% of a market's taker volume with at least 90% in one direction, ranked by dollars. Moves are averages over the wallet's orders in that market, in the order's favour.</p></div>
 </section>
 
-<section>
+<section id="sec-momentum">
   <h2>5 · Momentum or reversal?</h2>
   <p class="col">After a large order, does the price keep moving its way (momentum), or does it come back (reversal)? Each order of $1,000 or more is classified by the price over the 7 days after its immediate move: momentum if it moved at least 2¢ further in the order's direction, reversal if at least 2¢ back, stable otherwise. Of the 385,000 orders whose following week ended before the event, 38% saw momentum, 35% reversal and 27% stayed stable.</p>
 <p class="col">Large orders are contrarian: in the week before them, the price had moved 1–2¢ <i>against</i> the order's direction. In the day before the order, momentum and reversal cases look alike, and the previous day's move does not predict either in the regressions. They differ in the outcome. Momentum orders turned out right 77% of the time, when the market gave them 58%; reversal orders were right 29% of the time, against 50%. Part of that is mechanical, because prices drift toward the outcome, but it shows that a reversal usually means the order was wrong, not that the price was pushed and then sprang back.</p>
@@ -237,7 +240,7 @@ html, body { margin: 0; }
   </div>
 </section>
 
-<section>
+<section id="sec-push">
   <h2>6 · How much trading looks like pushing the price?</h2>
   <p class="col">A trader who wants a price rather than a payoff (to sway coverage, donors or voters, or to make a position look good) has to pay to move the market, and if nobody else agrees the move fades. One cannot read intent from a single trade: an overconfident trader leaves the same trace. What can be measured is how much trading leaves that trace, and whether the side being pushed then did worse than its price implied, which a manipulator's side should and an informed trader's side should not.</p>
 <p class="col">Each large order (≥ $1,000) is sorted by what it did to the price. It <b>moved</b> the price if the next trade was at least 1¢ further in its direction. The move <b>faded</b> if a day later no more than a quarter of it was left. It was <b>pushed again</b> if the same wallet's next order in the same direction, within a week, came after the move had faded: price support. It was <b>sold back</b> if the wallet unwound at least half of the position within a day, selling into the move it caused: the pump-and-dump pattern, which fast scalping also produces.</p>
@@ -251,7 +254,7 @@ html, body { margin: 0; }
     <p class="cap">One campaign is one wallet in one market, all its large orders in one direction. Profit is the wallet's total in that market; outcome minus price is averaged over its large orders.</p></div>
 </section>
 
-<section>
+<section id="sec-beat">
   <h2>7 · Can knowing who trades beat the price?</h2>
   <p class="col">If some wallets know more than others, their positions should predict outcomes beyond the price. The test here guards against finding patterns that are not there. For each market, the forecast is made 1 day or 7 days before the event, using only what was known then: the last traded price, the price change over the previous week, trading activity, and the net position and recent buying of each kind of wallet. Wallets are classified by their record in markets that had already resolved, rebuilt every quarter (proven forecaster: profit t-statistic above 2 over at least 10 markets; proven loser: below −2; market maker; new). Models are trained on 23,563 markets resolving before October 2025, tuned on the last six months of that period, and judged only on the 36,896 markets that resolved in the following year.</p>
 <p class="col">Three forecasts are compared with the price itself. A <b>recalibrated price</b> adjusts the price for systematic biases by event type, with no wallet data. A <b>logistic model</b> adds the wallet features to it. <b>Boosted trees</b> let the features interact freely.</p>
@@ -275,7 +278,8 @@ html, body { margin: 0; }
 </section>
 
 <footer>
-  Data: Polymarket's public Gamma and Data APIs, retrieved October 2026. Companion page: <a href="polymarket.html">How much do Polymarket prices know, and when?</a> · <a href="polymarket-israel.html">The 2026 Israeli election markets</a>
+  Part of a series: <a href="polymarket.html">How much do Polymarket prices know, and when?</a> · <a href="polymarket-traders.html">Who wins on Polymarket, and whose trades carry information?</a> · <a href="polymarket-israel.html">What Polymarket's Israeli election markets say</a><br>
+  Data: Polymarket's public Gamma and Data APIs, retrieved October 2026. 
 </footer>
 </div>
 <div id="tip" role="tooltip"></div>
