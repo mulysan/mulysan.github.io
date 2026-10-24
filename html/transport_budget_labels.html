@@ -34,11 +34,16 @@ details{margin:8px 0} summary{cursor:pointer;color:var(--text-secondary)} .scrol
 border-radius:8px;padding:6px 10px;font-size:12px;max-width:340px;box-shadow:0 4px 16px rgba(0,0,0,.15);display:none;z-index:9}
 .note{color:var(--text-secondary);font-size:13px}
 .caveat{border-inline-start:4px solid var(--series-2);font-size:14px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin:16px 0 8px;flex-wrap:wrap}
+.tabs button{font:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;color:var(--text-secondary);cursor:pointer;min-height:40px}
+.tabs button[aria-selected=true]{color:var(--text-primary);border-bottom-color:var(--series-2);font-weight:600}
 </style>
 </head>
 <body>
 <div dir="rtl" lang="he"><main>
 <h1>תקציב תחבורה ציבורית: תווית מול שימוש בפועל</h1>
+<nav class="tabs" role="tablist"><button role="tab" data-tab="main" aria-selected="true">הניתוח המלא (1997–2025)</button><button role="tab" data-tab="long" aria-selected="false">סדרה ארוכה (1960–2024)</button></nav>
+<section id="tab-main" role="tabpanel">
 <p class="sub">תקנות התקציב בתוכניות שמתויגות תחבורה ציבורית / הסעת המונים / "כבישים לתחבורה ציבורית", ביצוע 2015–2025, מיליארדי ₪ נומינליים. <b>המכנה: רק הוצאות תשתית</b>, בלי סבסוד נסיעות, הפעלה ומנהלה. מקור: מפתח התקציב (קובץ MoF גולמי). הסיווג לפי שם התקנה.</p>
 <div class="card caveat"><b>הסתייגות:</b> המספרים הם חסם תחתון. הם לא כוללים הוצאות מיותרות שנבלעות בתוך פרויקטי תחבורה ציבורית ונועדו בבירור לזרימת הרכב הפרטי, כמו ההפרדה המפלסית של הקו הסגול בגוש דן. התקציב לא מפרט את הרכיבים האלה בתוך תקנות הקווים, ולכן הם נשארים בקטגוריית "תח"צ". נכללים רק פריטים בודדים שזיהיתי בשמם ובעלותם, למשל כביש 461 ושיקוע רפאל איתן בקו הסגול, וחניון בייט בקו הירוק.</div>
 <div class="tiles">
@@ -205,7 +210,7 @@ border-radius:8px;padding:6px 10px;font-size:12px;max-width:340px;box-shadow:0 4
 
 <h3>א. חניוני הנתיבים המהירים (גוש דן)</h3>
 <div class="scroll"><table><tr><th>חניון</th><th>כביש</th><th>מקומות</th><th>עלות / מימון</th><th>מאיפה הכסף</th><th>סטטוס</th></tr>
-<tr><td>שפירים (הנתיב המהיר בכביש 1)</td><td>1</td><td class="n">1,800 → 3,800 (קומה שנייה)</td><td>BOT. הזכיינית שפיר שילמה 120 מיליון על הזיכיון, והמדינה משלמת 12 ₪ ליום לכל רכב. ב-2022 אושרה הרשאה של 94.5 מיליון לשיפור השירות מהחניון</td><td>זכיין, ותשלומי מדינה מתקציב תח"צ</td><td>פועל מ-2011</td></tr>
+<tr><td>שפירים (הנתיב המהיר בכביש 1)</td><td>1</td><td class="n">3,800 (אחרי קומה שנייה; קודם 1,800)</td><td>BOT. הזכיינית שפיר שילמה 120 מיליון על הזיכיון, והמדינה משלמת 12 ₪ ליום לכל רכב. ב-2022 אושרה הרשאה של 94.5 מיליון לשיפור השירות מהחניון</td><td>זכיין, ותשלומי מדינה מתקציב תח"צ</td><td>פועל מ-2011</td></tr>
 <tr><td>שפיים–געש</td><td>2 / 20</td><td class="n">6,700–7,000 (3 קומות, 230 דונם)</td><td>חלק מפרויקט הנתיבים המהירים, שנאמד ב-5–8 מיליארד (המקורות חלוקים). בפנייה התקציבית של 2018 נכתב "כולל חניוני חנה וסע לכ-11,000 כלי רכב בשפיים ובראשון לציון"</td><td>"נתא - נתיבים מהירים" ו-PPP של "נתיב לעיר"</td><td>נפתח 4/2026</td></tr>
 <tr><td>ראשון לציון (מבוא איילון / משה דיין)</td><td>20 / 441</td><td class="n">3,500 (4 קומות, כ-140 אלף מ"ר)</td><td>אותו פרויקט. ב-2022 אושרה עוד הרשאה של 130.3 מיליון ל"מקטע 6" שמחבר את הנתיב המהיר לחניון</td><td>"נתא - נתיבים מהירים" ו-PPP</td><td>נפתח 4.10.2026</td></tr>
 <tr><td>קסם (נתיב מהיר בכביש 5)</td><td>5 / 6</td><td class="n">3,200 (בתכנון המקורי 4,000)</td><td>PPP של אלקטרה, כ-2 מיליארד לכל הפרויקט, כולל 25 ק"מ נתיב (8/2026)</td><td>זכיין, ותשלומי מדינה בעתיד</td><td>צפי 2031</td></tr>
@@ -338,7 +343,7 @@ border-radius:8px;padding:6px 10px;font-size:12px;max-width:340px;box-shadow:0 4
 <div class="tiles">
 <div class="card tile"><div class="v">9.0</div><div class="l">מיליארד ₪ בשנה בממוצע ב-2021–2025 על הצד שאינו תח"צ</div></div>
 <div class="card tile"><div class="v">190</div><div class="l">מיליארד ₪ במצטבר ב-1997–2025, במחירי 2025</div></div>
-<div class="card tile"><div class="v">3.4 → 9.6</div><div class="l">מיליארד ₪ בשנה, 1997 מול 2025</div></div>
+<div class="card tile"><div class="v" dir="ltr" style="text-align:right">3.4 → 9.6</div><div class="l">מיליארד ₪ בשנה, 1997 מול 2025</div></div>
 </div>
 <div class="card"><div class="legend"><span><i style="background:var(--series-1)"></i>כבישים: סלילה, הרחבה ושדרוג</span><span><i style="background:var(--series-2)"></i>מחלפים והפרדות מפלסיות</span><span><i style="background:var(--series-3)"></i>אחזקה ושיקום כבישים</span><span><i style="background:var(--series-4)"></i>בטיחות בדרכים ומוקדי סיכון</span><span><i style="background:var(--series-5)"></i>חניונים וחנה וסע</span><span><i style="background:var(--series-6)"></i>נתיבים מהירים</span><span><i style="background:var(--series-7)"></i>תכנון וקידום זמינות (כבישים)</span><span><i style="background:var(--series-8)"></i>תפעול חברות הדרכים</span></div><div class="scroll"><svg viewBox="0 0 760 330" role="img" class="chart">
 <line x1="44" x2="750" y1="300.0" y2="300.0" class="grid"/><text x="38" y="304.0" class="tick" text-anchor="end">0</text>
@@ -480,8 +485,303 @@ border-radius:8px;padding:6px 10px;font-size:12px;max-width:340px;box-shadow:0 4
 <li><b>מעורב</b>: "מיעוטים - תשתיות תח"צ", "פרוייקטי תשתית מטרופוליניים", "פרוייקטים קטנים" ועוד. ההעברות הולכות לרשויות ולחברות ממשלתיות ללא פירוט פרויקט. הפירוט נמצא בתב"רים.</li>
 <li>הסכומים נומינליים, כפי ש"בוצע" בקובץ האוצר. ביצוע 2025 עשוי להיות חלקי. מוצגות רק תוכניות עם תווית תח"צ: כסף לכבישים שתויג "כבישים" לא נכלל.</li>
 </ul></div>
+</section>
+<section id="tab-long" role="tabpanel" hidden>
+<h2>השקעה בכבישים לאורך זמן: כל המממנים, 1960–2024</h2>
+<p class="sub">הטאב הראשון מבוסס על תקציב המדינה, שזמין בקובץ האוצר רק מ-1997. כאן הסדרה הארוכה של הלמ"ס: השקעה בכבישים מכל מקורות המימון (המדינה, הרשויות המקומיות, וזכיינים כמו כביש 6). היא כוללת סלילה, הרחבה ושיקום יסודי, אבל לא אחזקה שוטפת. במיליארדי ₪, מחירי 2025 (מדד המחירים לצרכן).</p>
+<div class="tiles">
+<div class="card tile"><div class="v">12.8</div><div class="l">מיליארד ₪ בשנה הושקעו בכבישים ב-2020–2024, מכל המקורות</div></div>
+<div class="card tile"><div class="v">4.6</div><div class="l">מיליארד ₪ בשנה ב-1995–1999</div></div>
+<div class="card tile"><div class="v">0.91%</div><div class="l">מהתוצר הושקעו בכבישים ב-1965, יותר מבכל שנה מאז 1995 (שיא: 0.85%)</div></div>
+<div class="card tile"><div class="v">33%</div><div class="l">החלק של הרכבות מתוך ההשקעה בכבישים וברכבות ב-2012–2016. ב-1995–1999 החלק היה 4%</div></div>
+</div>
+<h3>כבישים מול רכבות, 1995–2025</h3>
+<div class="card"><div class="legend"><span><i style="background:var(--series-2)"></i>השקעה בכבישים, כל המממנים (למ&quot;ס)</span><span><i style="background:var(--series-4)"></i>הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה)</span><span><i style="background:var(--series-1)"></i>השקעה ברכבות (למ&quot;ס, עד 2016)</span></div><div class="scroll"><svg viewBox="0 0 760 300" role="img" class="chart">
+<line x1="44" x2="746" y1="270.0" y2="270.0" class="grid"/><text x="38" y="274.0" class="tick" text-anchor="end">0</text>
+<line x1="44" x2="746" y1="206.0" y2="206.0" class="grid"/><text x="38" y="210.0" class="tick" text-anchor="end">4</text>
+<line x1="44" x2="746" y1="142.0" y2="142.0" class="grid"/><text x="38" y="146.0" class="tick" text-anchor="end">8</text>
+<line x1="44" x2="746" y1="78.0" y2="78.0" class="grid"/><text x="38" y="82.0" class="tick" text-anchor="end">12</text>
+<line x1="44" x2="746" y1="14.0" y2="14.0" class="grid"/><text x="38" y="18.0" class="tick" text-anchor="end">16</text>
+<text x="746.0" y="290" class="tick" text-anchor="middle">1995</text>
+<text x="629.0" y="290" class="tick" text-anchor="middle">2000</text>
+<text x="512.0" y="290" class="tick" text-anchor="middle">2005</text>
+<text x="395.0" y="290" class="tick" text-anchor="middle">2010</text>
+<text x="278.0" y="290" class="tick" text-anchor="middle">2015</text>
+<text x="161.0" y="290" class="tick" text-anchor="middle">2020</text>
+<text x="44.0" y="290" class="tick" text-anchor="middle">2025</text>
+<polyline points="746.0,195.5 722.6,187.6 699.2,196.4 675.8,195.1 652.4,208.0 629.0,176.6 605.6,155.1 582.2,152.4 558.8,152.7 535.4,193.6 512.0,202.2 488.6,183.0 465.2,143.2 441.8,133.6 418.4,172.6 395.0,171.8 371.6,166.4 348.2,148.9 324.8,135.8 301.4,147.7 278.0,146.6 254.6,138.7 231.2,122.1 207.8,115.9 184.4,109.0 161.0,67.9 137.6,79.7 114.2,61.2 90.8,48.7 67.4,67.7" fill="none" style="stroke:var(--series-2)" stroke-width="2" stroke-linejoin="round"/>
+<g class="hit" data-tip="1995 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="740.0" y="187.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1996 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="716.6" y="179.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1997 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="693.2" y="188.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1998 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="669.8" y="187.1" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1999 · השקעה בכבישים, כל המממנים (למ&quot;ס): 4 מיליארד ₪"><rect x="646.4" y="200.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2000 · השקעה בכבישים, כל המממנים (למ&quot;ס): 6 מיליארד ₪"><rect x="623.0" y="168.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2001 · השקעה בכבישים, כל המממנים (למ&quot;ס): 7 מיליארד ₪"><rect x="599.6" y="147.1" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2002 · השקעה בכבישים, כל המממנים (למ&quot;ס): 7 מיליארד ₪"><rect x="576.2" y="144.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2003 · השקעה בכבישים, כל המממנים (למ&quot;ס): 7 מיליארד ₪"><rect x="552.8" y="144.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2004 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="529.4" y="185.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2005 · השקעה בכבישים, כל המממנים (למ&quot;ס): 4 מיליארד ₪"><rect x="506.0" y="194.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2006 · השקעה בכבישים, כל המממנים (למ&quot;ס): 5 מיליארד ₪"><rect x="482.6" y="175.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2007 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="459.2" y="135.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2008 · השקעה בכבישים, כל המממנים (למ&quot;ס): 9 מיליארד ₪"><rect x="435.8" y="125.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2009 · השקעה בכבישים, כל המממנים (למ&quot;ס): 6 מיליארד ₪"><rect x="412.4" y="164.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2010 · השקעה בכבישים, כל המממנים (למ&quot;ס): 6 מיליארד ₪"><rect x="389.0" y="163.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2011 · השקעה בכבישים, כל המממנים (למ&quot;ס): 6 מיליארד ₪"><rect x="365.6" y="158.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2012 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="342.2" y="140.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2013 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="318.8" y="127.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2014 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="295.4" y="139.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2015 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="272.0" y="138.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2016 · השקעה בכבישים, כל המממנים (למ&quot;ס): 8 מיליארד ₪"><rect x="248.6" y="130.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2017 · השקעה בכבישים, כל המממנים (למ&quot;ס): 9 מיליארד ₪"><rect x="225.2" y="114.1" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2018 · השקעה בכבישים, כל המממנים (למ&quot;ס): 10 מיליארד ₪"><rect x="201.8" y="107.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2019 · השקעה בכבישים, כל המממנים (למ&quot;ס): 10 מיליארד ₪"><rect x="178.4" y="101.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2020 · השקעה בכבישים, כל המממנים (למ&quot;ס): 13 מיליארד ₪"><rect x="155.0" y="59.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2021 · השקעה בכבישים, כל המממנים (למ&quot;ס): 12 מיליארד ₪"><rect x="131.6" y="71.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2022 · השקעה בכבישים, כל המממנים (למ&quot;ס): 13 מיליארד ₪"><rect x="108.2" y="53.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2023 · השקעה בכבישים, כל המממנים (למ&quot;ס): 14 מיליארד ₪"><rect x="84.8" y="40.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2024 · השקעה בכבישים, כל המממנים (למ&quot;ס): 13 מיליארד ₪"><rect x="61.4" y="59.7" width="12" height="16" fill="transparent"/></g>
+<text x="60.4" y="59.7" class="dlab" text-anchor="middle">13</text>
+<polyline points="699.2,215.3 675.8,213.5 652.4,213.7 629.0,200.5 605.6,207.6 582.2,197.5 558.8,190.0 535.4,207.4 512.0,211.3 488.6,192.0 465.2,165.6 441.8,164.5 418.4,155.3 395.0,160.3 371.6,148.4 348.2,161.7 324.8,152.6 301.4,159.5 278.0,150.6 254.6,166.7 231.2,153.0 207.8,149.6 184.4,131.2 161.0,91.5 137.6,123.9 114.2,121.8 90.8,124.8 67.4,142.5 44.0,116.3" fill="none" style="stroke:var(--series-4)" stroke-width="2" stroke-linejoin="round"/>
+<g class="hit" data-tip="1997 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 3 מיליארד ₪"><rect x="693.2" y="207.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1998 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="669.8" y="205.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1999 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="646.4" y="205.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2000 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="623.0" y="192.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2001 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="599.6" y="199.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2002 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 5 מיליארד ₪"><rect x="576.2" y="189.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2003 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 5 מיליארד ₪"><rect x="552.8" y="182.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2004 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="529.4" y="199.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2005 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 4 מיליארד ₪"><rect x="506.0" y="203.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2006 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 5 מיליארד ₪"><rect x="482.6" y="184.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2007 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="459.2" y="157.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2008 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="435.8" y="156.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2009 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="412.4" y="147.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2010 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="389.0" y="152.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2011 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 8 מיליארד ₪"><rect x="365.6" y="140.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2012 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="342.2" y="153.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2013 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="318.8" y="144.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2014 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="295.4" y="151.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2015 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="272.0" y="142.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2016 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 6 מיליארד ₪"><rect x="248.6" y="158.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2017 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 7 מיליארד ₪"><rect x="225.2" y="145.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2018 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 8 מיליארד ₪"><rect x="201.8" y="141.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2019 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 9 מיליארד ₪"><rect x="178.4" y="123.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2020 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 11 מיליארד ₪"><rect x="155.0" y="83.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2021 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 9 מיליארד ₪"><rect x="131.6" y="115.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2022 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 9 מיליארד ₪"><rect x="108.2" y="113.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2023 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 9 מיליארד ₪"><rect x="84.8" y="116.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2024 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 8 מיליארד ₪"><rect x="61.4" y="134.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2025 · הצד שאינו תח&quot;צ בתקציב המדינה (כולל אחזקה): 10 מיליארד ₪"><rect x="38.0" y="108.3" width="12" height="16" fill="transparent"/></g>
+<text x="37.0" y="108.3" class="dlab" text-anchor="middle">10</text>
+<polyline points="746.0,268.3 722.6,267.9 699.2,267.8 675.8,265.9 652.4,265.6 629.0,265.8 605.6,265.9 582.2,259.6 558.8,255.2 535.4,247.6 512.0,235.4 488.6,234.3 465.2,234.1 441.8,230.7 418.4,240.9 395.0,241.6 371.6,233.6 348.2,216.2 324.8,196.7 301.4,211.8 278.0,214.9 254.6,201.3" fill="none" style="stroke:var(--series-1)" stroke-width="2" stroke-linejoin="round"/>
+<g class="hit" data-tip="1995 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="740.0" y="260.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1996 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="716.6" y="259.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1997 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="693.2" y="259.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1998 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="669.8" y="257.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1999 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="646.4" y="257.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2000 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="623.0" y="257.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2001 · השקעה ברכבות (למ&quot;ס, עד 2016): 0 מיליארד ₪"><rect x="599.6" y="257.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2002 · השקעה ברכבות (למ&quot;ס, עד 2016): 1 מיליארד ₪"><rect x="576.2" y="251.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2003 · השקעה ברכבות (למ&quot;ס, עד 2016): 1 מיליארד ₪"><rect x="552.8" y="247.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2004 · השקעה ברכבות (למ&quot;ס, עד 2016): 1 מיליארד ₪"><rect x="529.4" y="239.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2005 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="506.0" y="227.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2006 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="482.6" y="226.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2007 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="459.2" y="226.1" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2008 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="435.8" y="222.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2009 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="412.4" y="232.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2010 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="389.0" y="233.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2011 · השקעה ברכבות (למ&quot;ס, עד 2016): 2 מיליארד ₪"><rect x="365.6" y="225.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2012 · השקעה ברכבות (למ&quot;ס, עד 2016): 3 מיליארד ₪"><rect x="342.2" y="208.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2013 · השקעה ברכבות (למ&quot;ס, עד 2016): 5 מיליארד ₪"><rect x="318.8" y="188.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2014 · השקעה ברכבות (למ&quot;ס, עד 2016): 4 מיליארד ₪"><rect x="295.4" y="203.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2015 · השקעה ברכבות (למ&quot;ס, עד 2016): 3 מיליארד ₪"><rect x="272.0" y="206.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2016 · השקעה ברכבות (למ&quot;ס, עד 2016): 4 מיליארד ₪"><rect x="248.6" y="193.3" width="12" height="16" fill="transparent"/></g>
+<text x="247.6" y="193.3" class="dlab" text-anchor="middle">4</text>
+<line x1="44" x2="746" y1="270" y2="270" class="axis"/></svg></div>
+<p class="note">ההשקעה בכבישים מכל המקורות גבוהה מהצד שאינו תח"צ בתקציב המדינה, כי היא כוללת גם את הרשויות המקומיות ואת הזכיינים. מצד שני, תקציב המדינה כולל גם אחזקה שוטפת. נתוני הרכבות לפי שנה מופיעים בלוחות של בנק ישראל רק עד 2016. אחרי 2016, השקעת המדינה בתשתית תח"צ מופיעה בטאב הראשון.</p></div>
+<h3>השקעה בכבישים כאחוז מהתוצר</h3>
+<div class="card"><div class="legend"><span><i style="background:var(--series-2)"></i>השקעה בכבישים, אחוז מהתוצר</span></div><div class="scroll"><svg viewBox="0 0 760 300" role="img" class="chart">
+<line x1="44" x2="746" y1="270.0" y2="270.0" class="grid"/><text x="38" y="274.0" class="tick" text-anchor="end">0.00</text>
+<line x1="44" x2="746" y1="206.0" y2="206.0" class="grid"/><text x="38" y="210.0" class="tick" text-anchor="end">0.25</text>
+<line x1="44" x2="746" y1="142.0" y2="142.0" class="grid"/><text x="38" y="146.0" class="tick" text-anchor="end">0.50</text>
+<line x1="44" x2="746" y1="78.0" y2="78.0" class="grid"/><text x="38" y="82.0" class="tick" text-anchor="end">0.75</text>
+<line x1="44" x2="746" y1="14.0" y2="14.0" class="grid"/><text x="38" y="18.0" class="tick" text-anchor="end">1.00</text>
+<text x="746.0" y="290" class="tick" text-anchor="middle">1960</text>
+<text x="691.2" y="290" class="tick" text-anchor="middle">1965</text>
+<text x="636.3" y="290" class="tick" text-anchor="middle">1970</text>
+<text x="526.6" y="290" class="tick" text-anchor="middle">1980</text>
+<text x="416.9" y="290" class="tick" text-anchor="middle">1990</text>
+<text x="362.1" y="290" class="tick" text-anchor="middle">1995</text>
+<text x="307.2" y="290" class="tick" text-anchor="middle">2000</text>
+<text x="197.6" y="290" class="tick" text-anchor="middle">2010</text>
+<text x="87.9" y="290" class="tick" text-anchor="middle">2020</text>
+<polyline points="362.1,93.4 351.1,80.6 340.2,106.2 329.2,111.3 318.2,144.6 307.2,95.9 296.3,60.1 285.3,52.4 274.3,52.4 263.4,134.3 252.4,154.8 241.4,129.2 230.5,78.0 219.5,62.6 208.5,126.6 197.6,129.2 186.6,126.6 175.6,108.7 164.7,101.0 153.7,121.5 142.7,126.6 131.8,126.6 120.8,113.8 109.8,113.8 98.8,113.8 87.9,75.4 76.9,101.0 65.9,98.5 55.0,90.8 44.0,113.8" fill="none" style="stroke:var(--series-2)" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="746.0" cy="177.8" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1960 · השקעה בכבישים, אחוז מהתוצר: 0.36%"><rect x="740.0" y="169.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="713.1" cy="129.2" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1963 · השקעה בכבישים, אחוז מהתוצר: 0.55%"><rect x="707.1" y="121.2" width="12" height="16" fill="transparent"/></g>
+<circle cx="691.2" cy="37.0" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1965 · השקעה בכבישים, אחוז מהתוצר: 0.91%"><rect x="685.2" y="29.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1995 · השקעה בכבישים, אחוז מהתוצר: 0.69%"><rect x="356.1" y="85.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1996 · השקעה בכבישים, אחוז מהתוצר: 0.74%"><rect x="345.1" y="72.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1997 · השקעה בכבישים, אחוז מהתוצר: 0.64%"><rect x="334.2" y="98.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1998 · השקעה בכבישים, אחוז מהתוצר: 0.62%"><rect x="323.2" y="103.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="1999 · השקעה בכבישים, אחוז מהתוצר: 0.49%"><rect x="312.2" y="136.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2000 · השקעה בכבישים, אחוז מהתוצר: 0.68%"><rect x="301.2" y="87.9" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2001 · השקעה בכבישים, אחוז מהתוצר: 0.82%"><rect x="290.3" y="52.1" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2002 · השקעה בכבישים, אחוז מהתוצר: 0.85%"><rect x="279.3" y="44.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2003 · השקעה בכבישים, אחוז מהתוצר: 0.85%"><rect x="268.3" y="44.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2004 · השקעה בכבישים, אחוז מהתוצר: 0.53%"><rect x="257.4" y="126.3" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2005 · השקעה בכבישים, אחוז מהתוצר: 0.45%"><rect x="246.4" y="146.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2006 · השקעה בכבישים, אחוז מהתוצר: 0.55%"><rect x="235.4" y="121.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2007 · השקעה בכבישים, אחוז מהתוצר: 0.75%"><rect x="224.5" y="70.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2008 · השקעה בכבישים, אחוז מהתוצר: 0.81%"><rect x="213.5" y="54.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2009 · השקעה בכבישים, אחוז מהתוצר: 0.56%"><rect x="202.5" y="118.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2010 · השקעה בכבישים, אחוז מהתוצר: 0.55%"><rect x="191.6" y="121.2" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2011 · השקעה בכבישים, אחוז מהתוצר: 0.56%"><rect x="180.6" y="118.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2012 · השקעה בכבישים, אחוז מהתוצר: 0.63%"><rect x="169.6" y="100.7" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2013 · השקעה בכבישים, אחוז מהתוצר: 0.66%"><rect x="158.7" y="93.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2014 · השקעה בכבישים, אחוז מהתוצר: 0.58%"><rect x="147.7" y="113.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2015 · השקעה בכבישים, אחוז מהתוצר: 0.56%"><rect x="136.7" y="118.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2016 · השקעה בכבישים, אחוז מהתוצר: 0.56%"><rect x="125.8" y="118.6" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2017 · השקעה בכבישים, אחוז מהתוצר: 0.61%"><rect x="114.8" y="105.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2018 · השקעה בכבישים, אחוז מהתוצר: 0.61%"><rect x="103.8" y="105.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2019 · השקעה בכבישים, אחוז מהתוצר: 0.61%"><rect x="92.8" y="105.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2020 · השקעה בכבישים, אחוז מהתוצר: 0.76%"><rect x="81.9" y="67.4" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2021 · השקעה בכבישים, אחוז מהתוצר: 0.66%"><rect x="70.9" y="93.0" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2022 · השקעה בכבישים, אחוז מהתוצר: 0.67%"><rect x="59.9" y="90.5" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2023 · השקעה בכבישים, אחוז מהתוצר: 0.70%"><rect x="49.0" y="82.8" width="12" height="16" fill="transparent"/></g>
+<g class="hit" data-tip="2024 · השקעה בכבישים, אחוז מהתוצר: 0.61%"><rect x="38.0" y="105.8" width="12" height="16" fill="transparent"/></g>
+<text x="37.0" y="105.8" class="dlab" text-anchor="middle">0.61</text>
+<line x1="44" x2="746" y1="270" y2="270" class="axis"/></svg></div>
+<p class="note">לשנים 1966–1994 לא מצאתי נתון שנתי. בדוחות בנק ישראל מאותן שנים הכבישים מאוחדים עם "תחבורה אחרת", ובסדרות הלמ"ס הישנות הם חלק מ"עבודות בנייה אחרות". השיעור הממוצע של השינוי הריאלי בשנים האלה (בנק ישראל, לוח ב'-נ'-18):</p>
+<div class="scroll"><table><tr><th>תקופה</th><th>שינוי ריאלי שנתי ממוצע בהשקעה בכבישים</th></tr><tr><td>1970–1980</td><td class="n">-2.8%</td></tr><tr><td>1981–1989</td><td class="n">+12.7%</td></tr><tr><td>1990–1999</td><td class="n">+11.0%</td></tr><tr><td>2000–2009</td><td class="n">+4.6%</td></tr></table></div>
+<p class="note">בשנות ה-70 ההשקעה בכבישים ירדה ריאלית, כנראה בגלל הוצאות הביטחון אחרי מלחמת יום הכיפורים. היא התאוששה בשנות ה-80 וה-90, ובשנות ה-90 גדלה בעקבות העלייה מברית המועצות לשעבר.</p></div>
+<h3>מלאי הון הכבישים כאחוז מהתוצר, 1970–2019</h3>
+<div class="card"><div class="legend"><span><i style="background:var(--series-2)"></i>מחירים קבועים</span><span><i style="background:var(--series-6)"></i>מחירים שוטפים</span></div><div class="scroll"><svg viewBox="0 0 760 300" role="img" class="chart">
+<line x1="44" x2="746" y1="270.0" y2="270.0" class="grid"/><text x="38" y="274.0" class="tick" text-anchor="end">0</text>
+<line x1="44" x2="746" y1="206.0" y2="206.0" class="grid"/><text x="38" y="210.0" class="tick" text-anchor="end">6</text>
+<line x1="44" x2="746" y1="142.0" y2="142.0" class="grid"/><text x="38" y="146.0" class="tick" text-anchor="end">11</text>
+<line x1="44" x2="746" y1="78.0" y2="78.0" class="grid"/><text x="38" y="82.0" class="tick" text-anchor="end">16</text>
+<line x1="44" x2="746" y1="14.0" y2="14.0" class="grid"/><text x="38" y="18.0" class="tick" text-anchor="end">22</text>
+<text x="746.0" y="290" class="tick" text-anchor="middle">1970</text>
+<text x="602.7" y="290" class="tick" text-anchor="middle">1980</text>
+<text x="459.5" y="290" class="tick" text-anchor="middle">1990</text>
+<text x="316.2" y="290" class="tick" text-anchor="middle">2000</text>
+<text x="172.9" y="290" class="tick" text-anchor="middle">2010</text>
+<text x="44.0" y="290" class="tick" text-anchor="middle">2019</text>
+<polyline points="746.0,156.0 602.7,140.8 531.1,145.5 459.5,150.1 387.8,118.7 316.2,107.1 244.6,75.7 172.9,40.8 158.6,44.3 144.3,43.1 130.0,44.3 115.6,45.4 101.3,43.1 87.0,45.4 72.7,45.4 58.3,46.6 44.0,46.6" fill="none" style="stroke:var(--series-2)" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="746.0" cy="156.0" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1970 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 10%"><rect x="740.0" y="148.0" width="12" height="16" fill="transparent"/></g>
+<circle cx="602.7" cy="140.8" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1980 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 11%"><rect x="596.7" y="132.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="531.1" cy="145.5" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1985 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 11%"><rect x="525.1" y="137.5" width="12" height="16" fill="transparent"/></g>
+<circle cx="459.5" cy="150.1" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1990 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 10%"><rect x="453.5" y="142.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="387.8" cy="118.7" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1995 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 13%"><rect x="381.8" y="110.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="316.2" cy="107.1" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2000 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 14%"><rect x="310.2" y="99.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="244.6" cy="75.7" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2005 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 17%"><rect x="238.6" y="67.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="172.9" cy="40.8" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2010 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 20%"><rect x="166.9" y="32.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="158.6" cy="44.3" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2011 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="152.6" y="36.3" width="12" height="16" fill="transparent"/></g>
+<circle cx="144.3" cy="43.1" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2012 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 20%"><rect x="138.3" y="35.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="130.0" cy="44.3" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2013 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="124.0" y="36.3" width="12" height="16" fill="transparent"/></g>
+<circle cx="115.6" cy="45.4" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2014 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="109.6" y="37.4" width="12" height="16" fill="transparent"/></g>
+<circle cx="101.3" cy="43.1" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2015 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 20%"><rect x="95.3" y="35.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="87.0" cy="45.4" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2016 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="81.0" y="37.4" width="12" height="16" fill="transparent"/></g>
+<circle cx="72.7" cy="45.4" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2017 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="66.7" y="37.4" width="12" height="16" fill="transparent"/></g>
+<circle cx="58.3" cy="46.6" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2018 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="52.3" y="38.6" width="12" height="16" fill="transparent"/></g>
+<circle cx="44.0" cy="46.6" r="4" style="fill:var(--series-2);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2019 · מלאי הון הכבישים, אחוז מהתוצר (מחירים קבועים): 19%"><rect x="38.0" y="38.6" width="12" height="16" fill="transparent"/></g>
+<text x="37.0" y="38.6" class="dlab" text-anchor="middle">19</text>
+<polyline points="746.0,175.7 602.7,115.2 531.1,115.2 459.5,125.7 387.8,149.0 316.2,144.3 301.9,135.0 287.6,118.7 273.2,96.6 258.9,86.1 244.6,75.7 230.2,74.5 215.9,68.7 201.6,45.4 187.3,48.9 172.9,40.8 158.6,34.9 144.3,33.8 130.0,32.6 115.6,33.8 101.3,43.1 87.0,51.2 72.7,52.4 58.3,48.9 44.0,53.6" fill="none" style="stroke:var(--series-6)" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="746.0" cy="175.7" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1970 · מחירים שוטפים: 8%"><rect x="740.0" y="167.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="602.7" cy="115.2" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1980 · מחירים שוטפים: 13%"><rect x="596.7" y="107.2" width="12" height="16" fill="transparent"/></g>
+<circle cx="531.1" cy="115.2" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1985 · מחירים שוטפים: 13%"><rect x="525.1" y="107.2" width="12" height="16" fill="transparent"/></g>
+<circle cx="459.5" cy="125.7" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1990 · מחירים שוטפים: 12%"><rect x="453.5" y="117.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="387.8" cy="149.0" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="1995 · מחירים שוטפים: 10%"><rect x="381.8" y="141.0" width="12" height="16" fill="transparent"/></g>
+<circle cx="316.2" cy="144.3" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2000 · מחירים שוטפים: 11%"><rect x="310.2" y="136.3" width="12" height="16" fill="transparent"/></g>
+<circle cx="301.9" cy="135.0" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2001 · מחירים שוטפים: 12%"><rect x="295.9" y="127.0" width="12" height="16" fill="transparent"/></g>
+<circle cx="287.6" cy="118.7" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2002 · מחירים שוטפים: 13%"><rect x="281.6" y="110.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="273.2" cy="96.6" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2003 · מחירים שוטפים: 15%"><rect x="267.2" y="88.6" width="12" height="16" fill="transparent"/></g>
+<circle cx="258.9" cy="86.1" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2004 · מחירים שוטפים: 16%"><rect x="252.9" y="78.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="244.6" cy="75.7" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2005 · מחירים שוטפים: 17%"><rect x="238.6" y="67.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="230.2" cy="74.5" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2006 · מחירים שוטפים: 17%"><rect x="224.2" y="66.5" width="12" height="16" fill="transparent"/></g>
+<circle cx="215.9" cy="68.7" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2007 · מחירים שוטפים: 17%"><rect x="209.9" y="60.7" width="12" height="16" fill="transparent"/></g>
+<circle cx="201.6" cy="45.4" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2008 · מחירים שוטפים: 19%"><rect x="195.6" y="37.4" width="12" height="16" fill="transparent"/></g>
+<circle cx="187.3" cy="48.9" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2009 · מחירים שוטפים: 19%"><rect x="181.3" y="40.9" width="12" height="16" fill="transparent"/></g>
+<circle cx="172.9" cy="40.8" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2010 · מחירים שוטפים: 20%"><rect x="166.9" y="32.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="158.6" cy="34.9" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2011 · מחירים שוטפים: 20%"><rect x="152.6" y="26.9" width="12" height="16" fill="transparent"/></g>
+<circle cx="144.3" cy="33.8" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2012 · מחירים שוטפים: 20%"><rect x="138.3" y="25.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="130.0" cy="32.6" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2013 · מחירים שוטפים: 20%"><rect x="124.0" y="24.6" width="12" height="16" fill="transparent"/></g>
+<circle cx="115.6" cy="33.8" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2014 · מחירים שוטפים: 20%"><rect x="109.6" y="25.8" width="12" height="16" fill="transparent"/></g>
+<circle cx="101.3" cy="43.1" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2015 · מחירים שוטפים: 20%"><rect x="95.3" y="35.1" width="12" height="16" fill="transparent"/></g>
+<circle cx="87.0" cy="51.2" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2016 · מחירים שוטפים: 19%"><rect x="81.0" y="43.2" width="12" height="16" fill="transparent"/></g>
+<circle cx="72.7" cy="52.4" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2017 · מחירים שוטפים: 19%"><rect x="66.7" y="44.4" width="12" height="16" fill="transparent"/></g>
+<circle cx="58.3" cy="48.9" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2018 · מחירים שוטפים: 19%"><rect x="52.3" y="40.9" width="12" height="16" fill="transparent"/></g>
+<circle cx="44.0" cy="53.6" r="4" style="fill:var(--series-6);stroke:var(--surface-1)" stroke-width="2"/>
+<g class="hit" data-tip="2019 · מחירים שוטפים: 19%"><rect x="38.0" y="45.6" width="12" height="16" fill="transparent"/></g>
+<text x="37.0" y="45.6" class="dlab" text-anchor="middle">19</text>
+<line x1="44" x2="746" y1="270" y2="270" class="axis"/></svg></div>
+<p class="note">מלאי הון הכבישים הוא סך ההשקעות לאורך השנים, בניכוי פחת. במחירים קבועים, היחס לתוצר כמעט לא השתנה בין 1970 ל-1990 (10–11%). מאמצע שנות ה-90 הוא עלה בחדות, עד כ-19–20% מ-2010. מקור: בנק ישראל, לוח ב'-נ'-18, לפי נתוני הלמ"ס.</p></div>
+<details class="card"><summary>טבלה לפי שנה</summary><div class="scroll"><table><tr><th>שנה</th><th>השקעה בכבישים, מיליוני ₪ שוטפים</th><th>במחירי 2025, מיליארד</th><th>אחוז מהתוצר</th><th>תקציב המדינה, לא תח"צ (מחירי 2025)</th><th>רכבות (מחירי 2025)</th></tr><tr><td>1960</td><td class="n">0</td><td class="n">0.23</td><td class="n">0.36%</td><td class="n"></td><td class="n"></td></tr><tr><td>1963</td><td class="n">0</td><td class="n">0.47</td><td class="n">0.55%</td><td class="n"></td><td class="n"></td></tr><tr><td>1965</td><td class="n">0</td><td class="n">0.96</td><td class="n">0.91%</td><td class="n"></td><td class="n"></td></tr><tr><td>1995</td><td class="n">2,197</td><td class="n">4.66</td><td class="n">0.69%</td><td class="n"></td><td class="n">0.10</td></tr><tr><td>1996</td><td class="n">2,705</td><td class="n">5.15</td><td class="n">0.74%</td><td class="n"></td><td class="n">0.13</td></tr><tr><td>1997</td><td class="n">2,631</td><td class="n">4.60</td><td class="n">0.64%</td><td class="n">3.42</td><td class="n">0.14</td></tr><tr><td>1998</td><td class="n">2,825</td><td class="n">4.68</td><td class="n">0.62%</td><td class="n">3.53</td><td class="n">0.26</td></tr><tr><td>1999</td><td class="n">2,458</td><td class="n">3.87</td><td class="n">0.49%</td><td class="n">3.52</td><td class="n">0.28</td></tr><tr><td>2000</td><td class="n">3,747</td><td class="n">5.84</td><td class="n">0.68%</td><td class="n">4.34</td><td class="n">0.27</td></tr><tr><td>2001</td><td class="n">4,661</td><td class="n">7.18</td><td class="n">0.82%</td><td class="n">3.90</td><td class="n">0.26</td></tr><tr><td>2002</td><td class="n">5,040</td><td class="n">7.35</td><td class="n">0.85%</td><td class="n">4.53</td><td class="n">0.65</td></tr><tr><td>2003</td><td class="n">5,061</td><td class="n">7.33</td><td class="n">0.85%</td><td class="n">5.00</td><td class="n">0.92</td></tr><tr><td>2004</td><td class="n">3,286</td><td class="n">4.78</td><td class="n">0.53%</td><td class="n">3.91</td><td class="n">1.40</td></tr><tr><td>2005</td><td class="n">2,954</td><td class="n">4.24</td><td class="n">0.45%</td><td class="n">3.67</td><td class="n">2.16</td></tr><tr><td>2006</td><td class="n">3,869</td><td class="n">5.44</td><td class="n">0.55%</td><td class="n">4.88</td><td class="n">2.23</td></tr><tr><td>2007</td><td class="n">5,667</td><td class="n">7.92</td><td class="n">0.75%</td><td class="n">6.53</td><td class="n">2.25</td></tr><tr><td>2008</td><td class="n">6,377</td><td class="n">8.53</td><td class="n">0.81%</td><td class="n">6.59</td><td class="n">2.46</td></tr><tr><td>2009</td><td class="n">4,707</td><td class="n">6.09</td><td class="n">0.56%</td><td class="n">7.17</td><td class="n">1.82</td></tr><tr><td>2010</td><td class="n">4,873</td><td class="n">6.14</td><td class="n">0.55%</td><td class="n">6.86</td><td class="n">1.77</td></tr><tr><td>2011</td><td class="n">5,314</td><td class="n">6.47</td><td class="n">0.56%</td><td class="n">7.60</td><td class="n">2.27</td></tr><tr><td>2012</td><td class="n">6,321</td><td class="n">7.57</td><td class="n">0.63%</td><td class="n">6.77</td><td class="n">3.36</td></tr><tr><td>2013</td><td class="n">7,111</td><td class="n">8.39</td><td class="n">0.66%</td><td class="n">7.34</td><td class="n">4.58</td></tr><tr><td>2014</td><td class="n">6,512</td><td class="n">7.64</td><td class="n">0.58%</td><td class="n">6.90</td><td class="n">3.64</td></tr><tr><td>2015</td><td class="n">6,530</td><td class="n">7.71</td><td class="n">0.56%</td><td class="n">7.46</td><td class="n">3.45</td></tr><tr><td>2016</td><td class="n">6,908</td><td class="n">8.21</td><td class="n">0.56%</td><td class="n">6.46</td><td class="n">4.30</td></tr><tr><td>2017</td><td class="n">7,799</td><td class="n">9.24</td><td class="n">0.61%</td><td class="n">7.31</td><td class="n"></td></tr><tr><td>2018</td><td class="n">8,194</td><td class="n">9.63</td><td class="n">0.61%</td><td class="n">7.52</td><td class="n"></td></tr><tr><td>2019</td><td class="n">8,634</td><td class="n">10.06</td><td class="n">0.61%</td><td class="n">8.68</td><td class="n"></td></tr><tr><td>2020</td><td class="n">10,772</td><td class="n">12.63</td><td class="n">0.76%</td><td class="n">11.15</td><td class="n"></td></tr><tr><td>2021</td><td class="n">10,296</td><td class="n">11.89</td><td class="n">0.66%</td><td class="n">9.13</td><td class="n"></td></tr><tr><td>2022</td><td class="n">11,790</td><td class="n">13.05</td><td class="n">0.67%</td><td class="n">9.26</td><td class="n"></td></tr><tr><td>2023</td><td class="n">13,022</td><td class="n">13.83</td><td class="n">0.70%</td><td class="n">9.07</td><td class="n"></td></tr><tr><td>2024</td><td class="n">12,271</td><td class="n">12.64</td><td class="n">0.61%</td><td class="n">7.97</td><td class="n"></td></tr></table></div></details>
+<div class="card note"><ul>
+<li><b>מקורות:</b>
+  <ul>
+  <li>1995–2024: הלמ"ס דרך מאגר ה-ITF/OECD (השקעה בתשתית כבישים, מחירים שוטפים).</li>
+  <li>רכבות: שיעורי השינוי הריאליים בלוח ב'-נ'-26 של בנק ישראל, משורשרים מרמת 2016. כדי שיהיו על אותו בסיס כמו הכבישים, הם מוצגים לפי היחס בין רכבות לכבישים באותו לוח.</li>
+  <li>1960, 1963, 1965: פרקי התחבורה בדוחות בנק ישראל (16, 42 ו-96 מיליון ל"י).</li>
+  <li>תוצר: הלמ"ס. SNA68 עד 1994, ו-SNA2008 מ-1995.</li>
+  </ul></li>
+<li><b>שבר בסדרה:</b> ב-1995 הלמ"ס שינתה את הסיווג, וחשבון התוצר הישן נמוך בכ-18% מהחדש. לכן אחוזי התוצר בשנות ה-60 גבוהים מעט ביחס לשנים מ-1995.</li>
+<li><b>מחירי 2025:</b> לפי מדד המחירים לצרכן. מחירי הבנייה עלו מהר יותר מהמדד, ולכן הכמות הריאלית בשנים המוקדמות מוערכת כאן בחסר.</li>
+</ul></div>
+
+</section>
 </main><div id="tip"></div>
 <script>
+const tabs=document.querySelectorAll('.tabs button');
+function show(t){tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+ document.getElementById('tab-main').hidden=t!=='main';document.getElementById('tab-long').hidden=t!=='long';
+ try{localStorage.setItem('tab',t)}catch(e){}}
+tabs.forEach(b=>b.addEventListener('click',()=>{show(b.dataset.tab);history.replaceState(null,'','#'+b.dataset.tab)}));
+let t0=location.hash.slice(1);if(!t0){try{t0=localStorage.getItem('tab')}catch(e){}}
+if(t0==='long')show('long');
 const tip=document.getElementById('tip');
 document.querySelectorAll('.hit').forEach(g=>{
  g.addEventListener('mousemove',e=>{tip.textContent=g.dataset.tip;tip.style.display='block';
