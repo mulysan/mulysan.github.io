@@ -1,0 +1,23 @@
+name: Israel election live prices
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: israel-live
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch prices
+        run: python3 scripts/israel_live.py
+      - name: Commit if changed
+        run: |
+          git config user.name "israel-live-bot"
+          git config user.email "israel-live-bot@users.noreply.github.com"
+          git add html/data/israel-live.json
+          git diff --cached --quiet || (git commit -m "Israel live prices $(date -u +%H:%M)" && git pull --rebase -q && git push)

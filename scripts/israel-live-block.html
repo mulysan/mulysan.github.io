@@ -1,0 +1,142 @@
+<!-- live:start -->
+<style>
+#sec-live .livebadge { display:inline-block; font:500 11px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#d1342f; border-radius:3px; padding:4px 6px; margin-right:8px; vertical-align:3px; }
+#sec-live .stamp { font:12.5px/1.4 var(--mono); color:var(--ink-3); }
+#sec-live td.up { color:#1a7f4b; } #sec-live td.dn { color:#c2410c; }
+#sec-live td.na { color:var(--ink-3); }
+#sec-live .lk { display:flex; flex-wrap:wrap; gap:4px 16px; font:12px var(--mono); color:var(--ink-2); }
+#sec-live .lk i { display:inline-block; width:18px; height:0; border-top:2px solid; vertical-align:middle; margin-right:5px; }
+</style>
+<section id="sec-live">
+  <h2><span class="livebadge">Live</span>Election night, 27 October 2026</h2>
+  <p class="col">Prices on both venues, refreshed automatically: Polymarket every minute from this page, Kalshi every 15 minutes (Kalshi's data cannot be read from a browser, so a scheduled job copies it here). Kalshi prices are bid–ask midpoints; Polymarket's are its displayed price. Change is since polls opened (the median price between 06:00 and 08:00 Israel time). The sections further down analyse trading up to 19 October.</p>
+  <p class="stamp" id="live-stamp">Loading…</p>
+  <div class="figure"><h3>The main markets on both venues</h3>
+    <div class="tablewrap"><table id="live-tab"><thead><tr><th></th><th>Kalshi</th><th>since 07:00</th><th>Polymarket</th><th>since 07:00</th></tr></thead><tbody></tbody></table></div>
+    <p class="cap">"No government" is Kalshi's "No one" contract: it pays if no government is formed after this election, including when new elections are called first. Thin markets (bid–ask spread over 5¢) show the spread in brackets. Blocs as the venues define them: Netanyahu bloc = Likud, Otzma Yehudit, RZP–Zehut, Amcha Yisrael, UTJ and Shas.</p></div>
+  <div class="figure"><h3>If there is a repeat election: what the gap between the venues implies</h3>
+    <div id="live-cond"></div>
+    <p class="cap">Kalshi's prime-minister market resolves "No one" if new elections are called before a government forms. Polymarket's goes to the next person sworn in as prime minister after the 2026 election (deadline 31 December 2027), which would include whoever wins a repeat election. If the two venues price the same beliefs, Polymarket − Kalshi for a candidate is the chance of a repeat election times the chance the candidate wins it, so dividing by Kalshi's "No one" price gives the chance of becoming prime minister after a repeat election. A reading, not a market price: it assumes Polymarket applies its rule this way and ignores the two months' difference in deadlines.</p></div>
+  <div class="figure"><h3>Today, minute by minute: next prime minister</h3><div class="lk" id="live-lk1"></div><svg id="live-ch1" viewBox="0 0 760 300" role="img" aria-label="Prime minister markets today"></svg>
+    <p class="cap">Israel time. Dotted lines: the Central Elections Committee's turnout updates (10:00, 12:00, 14:00, 16:00, 18:00, 20:00); solid line: polls close at 22:00. Exit polls are published at 22:00.</p></div>
+  <div class="figure"><h3>Today: blocs, thresholds and turnout</h3><div class="lk" id="live-lk2"></div><svg id="live-ch2" viewBox="0 0 760 300" role="img" aria-label="Bloc, threshold and turnout markets today"></svg></div>
+</section>
+<script>
+(function () {
+  var KC = "#2a78d6", PC = "#eb6834", GC = "#7a8292", TC = "#1baf7a", RC = "#a3509b";
+  var ROWS = [
+    ["Netanyahu next prime minister", "pm_bibi", "pm_bibi"],
+    ["Eizenkot next prime minister", "pm_eiz", "pm_eiz"],
+    ["Bennett next prime minister", "pm_ben", "pm_ben"],
+    ["No government (new election or none by Oct 2027)", "pm_none", null],
+    ["Yashar largest party", "largest_yashar", "largest_yashar"],
+    ["Likud largest party", "largest_likud", "largest_likud"],
+    ["Netanyahu bloc wins more seats", "blocmost_bibi", "blocmost_bibi"],
+    ["A bloc reaches 61 seats", "!bloc61_none", "any61"],
+    ["Winter's list (Amcha Yisrael) passes 3.25%", "seat_winter", "seat_winter"],
+    ["Hendel's list (Reservists) passes 3.25%", "seat_hendel", "seat_hendel"],
+    ["Votes below the threshold ≥ 7%", "wasted7", null],
+    ["Turnout ≥ 5.6 million votes", "turnout56", null],
+    ["Turnout ≥ 5.8 million votes", "turnout58", null],
+    ["Likud in the next government", "govt_likud", null],
+    ["Yashar in the next government", "govt_yashar", null]
+  ];
+  var D = null, PL = {};
+  // baseline: median price between 06:00 and 08:00 Israel time (around polls opening), robust to one-off quotes
+  function base(h) {
+    var lo = Date.UTC(2026, 9, 27, 4) / 1000, hi = Date.UTC(2026, 9, 27, 6) / 1000;
+    var v = h.filter(function (p) { return p[0] >= lo && p[0] <= hi; }).map(function (p) { return p[1]; }).sort(function (a, b) { return a - b; });
+    if (!v.length) return h.length ? h[0][1] : null;
+    return v[Math.floor(v.length / 2)];
+  }
+  function cents(v) { return v == null || isNaN(v) ? "–" : (100 * v).toFixed(v < 0.1 && v > 0 ? 1 : 0) + "¢"; }
+  function kq(key) {
+    var inv = key[0] === "!", k = inv ? key.slice(1) : key, q = D.kalshi[k];
+    if (!q) return null;
+    var m = q.mid, h = D.hist["k_" + k] || [], first = base(h);
+    if (inv) { m = m == null ? null : 1 - m; first = first == null ? null : 1 - first; }
+    var spr = (q.bid != null && q.ask != null) ? q.ask - q.bid : null;
+    return { now: m, first: first, spr: spr };
+  }
+  function pq(key) {
+    var q = PL[key] || D.poly[key];
+    if (!q) return null;
+    var h = D.hist["p_" + key] || [];
+    return { now: q.mid, first: base(h), spr: (q.bid != null && q.ask != null) ? q.ask - q.bid : null };
+  }
+  function cell(q) {
+    if (!q || q.now == null) return '<td class="na">–</td><td class="na"></td>';
+    var s = cents(q.now) + (q.spr != null && q.spr > 0.05 ? ' <small>(' + cents(q.now - q.spr / 2) + '–' + cents(q.now + q.spr / 2) + ')</small>' : '');
+    var c = q.first == null ? "" : (100 * (q.now - q.first));
+    var cls = c === "" ? "na" : (c >= 0.5 ? "up" : c <= -0.5 ? "dn" : "");
+    return "<td>" + s + '</td><td class="' + cls + '">' + (c === "" ? "" : (c > 0 ? "+" : "") + c.toFixed(1)) + "</td>";
+  }
+  function table() {
+    var tb = document.querySelector("#live-tab tbody"), h = "";
+    ROWS.forEach(function (r) { h += '<tr><th scope="row">' + r[0] + "</th>" + cell(kq(r[1])) + (r[2] ? cell(pq(r[2])) : '<td class="na">–</td><td class="na"></td>') + "</tr>"; });
+    tb.innerHTML = h;
+    var none = kq("pm_none"), out = [];
+    [["Eizenkot", "pm_eiz"], ["Netanyahu", "pm_bibi"], ["Bennett", "pm_ben"]].forEach(function (c) {
+      var k = kq(c[1]), p = pq(c[1]);
+      if (k && p && none && none.now > 0.03) out.push([c[0], (p.now - k.now) / none.now, p.now - k.now]);
+    });
+    document.getElementById("live-cond").innerHTML = none ? '<div class="tiles">' + out.map(function (o) {
+      return '<div class="tile"><b>' + (o[1] < 0 ? "≈0" : Math.round(100 * o[1]) + "%") + "</b><span>" + o[0] + " becomes prime minister after a repeat election (gap " + (100 * o[2]).toFixed(1) + "¢ ÷ " + cents(none.now) + ")</span></div>";
+    }).join("") + "</div>" : "";
+  }
+  function day(h) { return Date.UTC(2026, 9, 26, 22 + h) / 1000; }
+  function chart(id, lkid, lines, ymax) {
+    var svg = document.getElementById(id), W = 760, H = 300, l = 44, r = 12, t = 10, b = 30, pw = W - l - r, ph = H - t - b;
+    var x0 = day(0), nowt = Date.now() / 1000, x1 = Math.max(day(24), Math.min(nowt + 1800, day(30)));
+    var X = function (v) { return l + (v - x0) / (x1 - x0) * pw; }, Y = function (v) { return t + (1 - v / ymax) * ph; };
+    var s = "";
+    for (var v = 0; v <= ymax + 1e-9; v += ymax / 4) s += '<line class="grid" x1="' + l + '" x2="' + (l + pw) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text class="tick" x="' + (l - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + Math.round(100 * v) + "¢</text>";
+    for (var hh = 0; hh <= 30; hh += 3) { if (day(hh) > x1) break; s += '<text class="tick" x="' + X(day(hh)) + '" y="' + (t + ph + 16) + '" text-anchor="middle">' + ((hh % 24) < 10 ? "0" : "") + (hh % 24) + ":00</text>"; }
+    [10, 12, 14, 16, 18, 20].forEach(function (hh) { s += '<line x1="' + X(day(hh)) + '" x2="' + X(day(hh)) + '" y1="' + t + '" y2="' + (t + ph) + '" stroke="var(--diag)" stroke-dasharray="2 3"/>'; });
+    s += '<line x1="' + X(day(22)) + '" x2="' + X(day(22)) + '" y1="' + t + '" y2="' + (t + ph) + '" stroke="var(--ink-2)" stroke-width="1.2"/><text class="tick" x="' + (X(day(22)) + 4) + '" y="' + (t + 10) + '">polls close</text>';
+    var lk = "";
+    lines.forEach(function (L) {
+      var pts = (D.hist[L[0]] || []).slice();
+      if (L[4]) pts = pts.map(function (p) { return [p[0], 1 - p[1]]; });
+      var live = L[0][0] === "p" ? PL[L[0].slice(2)] : null;
+      if (live && live.mid != null) pts.push([nowt, L[4] ? 1 - live.mid : live.mid]);
+      if (!pts.length) return;
+      s += '<polyline fill="none" stroke="' + L[2] + '" stroke-width="2" ' + (L[3] ? 'stroke-dasharray="6 4" ' : "") + 'points="' + pts.map(function (p) { return X(p[0]).toFixed(1) + "," + Y(Math.min(ymax, p[1])).toFixed(1); }).join(" ") + '"/>';
+      var e = pts[pts.length - 1];
+      s += '<circle cx="' + X(e[0]) + '" cy="' + Y(Math.min(ymax, e[1])) + '" r="3" fill="' + L[2] + '"/>';
+      lk += '<span><i style="border-color:' + L[2] + (L[3] ? ';border-top-style:dashed' : '') + '"></i>' + L[1] + " " + cents(e[1]) + "</span>";
+    });
+    svg.innerHTML = s;
+    document.getElementById(lkid).innerHTML = lk;
+  }
+  function draw() {
+    if (!D) return;
+    table();
+    chart("live-ch1", "live-lk1", [["k_pm_bibi", "Netanyahu – Kalshi", KC], ["p_pm_bibi", "Netanyahu – Polymarket", PC], ["k_pm_eiz", "Eizenkot – Kalshi", KC, 1], ["p_pm_eiz", "Eizenkot – Polymarket", PC, 1], ["k_pm_none", "No government – Kalshi", GC]], 1);
+    chart("live-ch2", "live-lk2", [["k_blocmost_bibi", "Netanyahu bloc more seats – Kalshi", KC], ["p_blocmost_bibi", "– Polymarket", PC], ["k_bloc61_none", "A bloc reaches 61 – Kalshi", KC, 1, 1], ["p_any61", "– Polymarket", PC, 1],
+      ["p_seat_winter", "Winter passes – Polymarket", RC], ["p_seat_hendel", "Hendel passes – Polymarket", RC, 1], ["k_turnout58", "Turnout ≥ 5.8m – Kalshi", TC]], 1);
+    var u = new Date(D.updated), now = new Date();
+    var fmt = function (d) { return d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jerusalem" }); };
+    document.getElementById("live-stamp").textContent = "Kalshi as of " + fmt(u) + " Israel time · Polymarket as of " + fmt(now) + " · refreshes automatically";
+  }
+  function loadFile() {
+    fetch("data/israel-live.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (d) { D = d; draw(); }).catch(function () {});
+  }
+  function loadPoly() {
+    if (!D) return;
+    var ids = Object.keys(D.poly).map(function (k) { return "id=" + D.poly[k].id; }).join("&");
+    fetch("https://gamma-api.polymarket.com/markets?" + ids).then(function (r) { return r.json(); }).then(function (ms) {
+      var byId = {}; ms.forEach(function (m) { byId[m.id] = m; });
+      Object.keys(D.poly).forEach(function (k) {
+        var m = byId[D.poly[k].id]; if (!m) return;
+        var b = m.bestBid == null ? null : +m.bestBid, a = m.bestAsk == null ? null : +m.bestAsk, l = m.lastTradePrice == null ? null : +m.lastTradePrice;
+        PL[k] = { bid: b, ask: a, mid: (b != null && a != null && a - b <= 0.15) ? (a + b) / 2 : l };
+      });
+      draw();
+    }).catch(function () {});
+  }
+  loadFile(); setTimeout(loadPoly, 1500);
+  setInterval(loadPoly, 60000); setInterval(loadFile, 180000);
+})();
+</script>
+<!-- live:end -->
