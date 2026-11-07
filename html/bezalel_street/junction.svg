@@ -1973,7 +1973,7 @@
 <text x="1063.2" y="1568" font-size="13" fill="#333" text-anchor="start" direction="rtl">מעבר חצייה מוגבה (עם זברה)</text>
 <rect x="838.0" y="1556" width="26" height="14" fill="#DCEBD3" stroke="#9A9183"/>
 <text x="832.0" y="1568" font-size="13" fill="#333" text-anchor="start" direction="rtl">גן</text>
-<text x="1660" y="1628" font-size="12" fill="#5F656B" text-anchor="start" direction="rtl">בחלופה ב׳ אין רכב פרטי מזרחה ב־E (שער אוטובוס בטרומפלדור). רמזור וקו עצירה בכל גישה, 2.5 מ׳ לפני המעבר; B = רמזור אוטובוס.</text>
+<text x="1660" y="1628" font-size="12" fill="#5F656B" text-anchor="start" direction="rtl">בחלופה א׳ אין רכב פרטי מזרחה ב־E (שער אוטובוס בטרומפלדור). רמזור וקו עצירה בכל גישה, 2.5 מ׳ לפני המעבר; B = רמזור אוטובוס.</text>
 <text x="1660" y="1646" font-size="12" fill="#5F656B" text-anchor="start" direction="rtl">המעבר בזרוע הצפונית של קינג ג׳ורג׳ פועל באותו מופע כמו הזרוע הדרומית. החיבור להלל ולמקטע 4 בקינג ג׳ורג׳ – לבירור מול תכנית קינג ג׳ורג׳ 2030.</text>
 <rect x="1654" y="1584" width="9" height="20" rx="2.5" fill="#1E2124"/><text x="1648" y="1599" font-size="13" fill="#333" text-anchor="start" direction="rtl">רמזור לרכב (B = לאוטובוס)</text>
 <line x1="1450" y1="1594" x2="1478" y2="1594" stroke="#222" stroke-width="3.5"/><text x="1442" y="1599" font-size="13" fill="#333" text-anchor="start" direction="rtl">קו עצירה</text>
